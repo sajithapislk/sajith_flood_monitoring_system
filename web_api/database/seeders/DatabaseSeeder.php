@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             DMSeeder::class,
             MonitorPlaceSeeder::class,
             SafetyPlaceSeeder::class,
+            FloodStatusSeeder::class
         ]);
     }
 }
