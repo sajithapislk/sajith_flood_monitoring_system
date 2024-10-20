@@ -1,0 +1,19 @@
+import pickle
+import pandas as pd
+
+# Load the saved model and scaler
+loaded_model = pickle.load(open('flood_prediction_model.pkl', 'rb'))
+loaded_scaler = pickle.load(open('scaler.pkl', 'rb'))
+
+def predict_flood_with_pickle(place, water_level, distance_to_river, soil_saturation, river_flow, drainage_capacity, month):
+    # ... (same as before, including data preprocessing and prediction) ...
+
+# Get input values (you'll need to define how you get these)
+# For example, you could get them from command-line arguments
+# or read them from a file
+
+# Call the prediction function
+result = predict_flood_with_pickle(place, water_level, distance_to_river, soil_saturation, river_flow, drainage_capacity, month)
+
+# Print or use the result as needed
+print(result)
