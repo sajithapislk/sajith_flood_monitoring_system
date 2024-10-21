@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1037974970073",
+    "project_id": "flood-system-c44c3",
+    "storage_bucket": "flood-system-c44c3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1037974970073:android:1fbe33798c8708f83d28c8",
+        "android_client_info": {
+          "package_name": "com.example.floodsystem"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzbUgkVu8i0wQebkRf31Yogk6ojElb6-8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1037974970073:android:35d56aefd0fd06ec3d28c8",
+        "android_client_info": {
+          "package_name": "com.example.newapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzbUgkVu8i0wQebkRf31Yogk6ojElb6-8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
