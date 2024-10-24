@@ -1,17 +1,15 @@
-import 'dart:developer';
-
+import 'package:appnew/auth/auth_bloc.dart';
 import 'package:appnew/user/screens/dashboard_screen.dart';
 import 'package:appnew/user/screens/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'check_auth_cubit.dart';
-import 'check_auth_state.dart';
-Future<void> main() async {
+import 'auth/auth_event.dart';
+import 'auth/auth_state.dart';
 
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
@@ -39,7 +37,9 @@ Future<void> main() async {
   });
   runApp(
     BlocProvider(
-      create: (context) => AuthCubit()..checkAuthStatus(),
+      create: (context) =>
+      AuthBloc()
+        ..add(AppStarted()),
       child: MyApp(),
     ),
   );
@@ -52,15 +52,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: BlocBuilder<AuthCubit, AuthState>(
-        builder: (context, state) {
+      home: BlocListener<AuthBloc, AuthState>(
+        listener: (context, state) {
           if (state is Authenticated) {
-            return DashboardScreen(); // Navigate to home page
-          } else if (state is Unauthenticated) {
-            return UserLoginScreen(); // Navigate to login page
+            // Navigate to DashboardScreen when authenticated
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => DashboardScreen()));
+          }else if (state is Unauthenticated) {
+            // Navigate to DashboardScreen when authenticated
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => UserLoginScreen()));
           }
-          return Center(child: CircularProgressIndicator()); // Loading state
         },
+        child: Center(child: CircularProgressIndicator()),
       ),
     );
   }
