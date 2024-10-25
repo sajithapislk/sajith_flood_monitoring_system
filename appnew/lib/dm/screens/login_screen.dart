@@ -1,20 +1,20 @@
 import 'package:appnew/auth/auth_bloc.dart';
 import 'package:appnew/auth/auth_event.dart';
 import 'package:appnew/auth/auth_state.dart';
+import 'package:appnew/dm/screens/home_screen.dart';
+import 'package:appnew/user/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../dm/screens/login_screen.dart';
-import 'dashboard_screen.dart';
 
-class UserLoginScreen extends StatefulWidget {
-  const UserLoginScreen({super.key});
+class DmLoginScreen extends StatefulWidget {
+  const DmLoginScreen({super.key});
 
   @override
-  State<UserLoginScreen> createState() => _UserLoginScreenState();
+  State<DmLoginScreen> createState() => _DmLoginScreenState();
 }
 
-class _UserLoginScreenState extends State<UserLoginScreen> {
+class _DmLoginScreenState extends State<DmLoginScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -40,7 +40,7 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                 padding: const EdgeInsets.symmetric(vertical: 60),
                 child: Center(
                   child: Text(
-                    "User Login",
+                    "DM Login",
                     style: TextStyle(
                         fontSize: 26.0,
                         fontWeight: FontWeight.bold,
@@ -76,11 +76,11 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => DmLoginScreen()),
+                      builder: (context) => UserLoginScreen()),
                 );
               },
               child: Text(
-                'District magistrate Officer Login',
+                'User Login',
                 style: TextStyle(color: Colors.blue, fontSize: 15),
               ),
             ),
@@ -96,7 +96,7 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => DashboardScreen()),
+                          builder: (context) => HomeScreen()),
                     );
                   }
                   if (state is AuthFailure) {
@@ -116,7 +116,7 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                       String _password = passwordController.text;
 
                       context.read<AuthBloc>().add(
-                        UserLoginRequested(
+                        DmLoginRequested(
                           email: _email,
                           password: _password,
                         ),

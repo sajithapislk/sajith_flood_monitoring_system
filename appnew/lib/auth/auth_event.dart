@@ -6,11 +6,20 @@ abstract class AuthEvent extends Equatable {
 }
 class AppStarted  extends AuthEvent {}
 
-class LoginRequested extends AuthEvent {
+class UserLoginRequested extends AuthEvent {
   final String email;
   final String password;
 
-  LoginRequested({required this.email, required this.password});
+  UserLoginRequested({required this.email, required this.password});
+
+  @override
+  List<Object> get props => [email, password];
+}
+class DmLoginRequested extends AuthEvent {
+  final String email;
+  final String password;
+
+  DmLoginRequested({required this.email, required this.password});
 
   @override
   List<Object> get props => [email, password];

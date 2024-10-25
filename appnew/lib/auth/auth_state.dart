@@ -9,9 +9,13 @@ class AuthInitial extends AuthState {}
 
 class AuthLoading extends AuthState {}
 
+class Authenticated extends AuthState {
+  final String type;
+  Authenticated({required this.type});
 
-
-class Authenticated extends AuthState {}
+  @override
+  List<Object> get props => [type];
+}
 
 class Unauthenticated extends AuthState {}
 
