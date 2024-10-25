@@ -2,6 +2,7 @@ import 'package:appnew/auth/auth_bloc.dart';
 import 'package:appnew/user/screens/dashboard_screen.dart';
 import 'package:appnew/user/screens/login_screen.dart';
 import 'package:appnew/user/screens/monitor_place_screen.dart';
+import 'package:appnew/user/screens/safe_place_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +59,7 @@ class MyApp extends StatelessWidget {
           if (state is Authenticated) {
             // Navigate to DashboardScreen when authenticated
             Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => MonitorPlaceScreen()));
+                context, MaterialPageRoute(builder: (context) => SafePlaceScreen(id: 1, areaId: 1)));
           }else if (state is Unauthenticated) {
             // Navigate to DashboardScreen when authenticated
             Navigator.pushReplacement(
