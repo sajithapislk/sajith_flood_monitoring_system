@@ -1,7 +1,7 @@
 import 'package:appnew/auth/auth_bloc.dart';
 import 'package:appnew/auth/auth_event.dart';
 import 'package:appnew/auth/auth_state.dart';
-import 'package:appnew/dm/screens/home_screen.dart';
+import 'package:appnew/dm/screens/dm_dashboard_screen.dart';
 import 'package:appnew/user/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -96,7 +96,7 @@ class _DmLoginScreenState extends State<DmLoginScreen> {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => HomeScreen()),
+                          builder: (context) => DmDashboardScreen()),
                     );
                   }
                   if (state is AuthFailure) {

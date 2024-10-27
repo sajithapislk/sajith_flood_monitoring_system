@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class DmDashboardScreen extends StatefulWidget {
+  const DmDashboardScreen({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<DmDashboardScreen> createState() => _DmDashboardScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _DmDashboardScreenState extends State<DmDashboardScreen> {
 
   List<Items> myList = [
     Items(
