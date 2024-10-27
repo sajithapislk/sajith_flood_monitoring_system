@@ -52,13 +52,13 @@ return [
             'driver' => 'token',
             'provider' => 'users',
         ],
+        'dm' => [
+            'driver' => 'token',
+            'provider' => 'd_m_s',
+        ],
         'admin' => [
             'driver' => 'session',
             'provider' => 'admins',
-        ],
-        'dm' => [
-            'driver' => 'session',
-            'provider' => 'd_m_s',
         ],
     ],
 
@@ -84,12 +84,6 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
-
         'admins'=>[
             'driver'=> 'eloquent',
             'model'=> App\Models\Admin::class,
@@ -125,14 +119,6 @@ return [
             'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,
-        ],
-        'admins'=>[
-            'driver'=>'eloquent',
-            'model'=>\App\Models\Admin::class,
-        ],
-        'dm' => [
-            'driver' => 'eloquent',
-            'model' => \App\Models\DM::class,
         ],
     ],
 
