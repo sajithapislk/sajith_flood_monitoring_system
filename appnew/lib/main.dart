@@ -1,5 +1,6 @@
 import 'package:appnew/auth/auth_bloc.dart';
 import 'package:appnew/dm/screens/home_screen.dart';
+import 'package:appnew/dm/screens/risk_people_screen.dart';
 import 'package:appnew/user/screens/dashboard_screen.dart';
 import 'package:appnew/user/screens/login_screen.dart';
 import 'package:appnew/user/screens/map_screen.dart';
@@ -62,7 +63,7 @@ class MyApp extends StatelessWidget {
           if (state is Authenticated) {
             // Navigate to DashboardScreen when authenticated
             Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => state.type == 'dm' ? MonitorPlaceScreen() : DashboardScreen()));
+                context, MaterialPageRoute(builder: (context) => state.type == 'dm' ? RiskPeopleScreen() : DashboardScreen()));
           }else if (state is Unauthenticated) {
             // Navigate to DashboardScreen when authenticated
             Navigator.pushReplacement(
