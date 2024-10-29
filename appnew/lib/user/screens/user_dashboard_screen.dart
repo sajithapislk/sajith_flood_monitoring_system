@@ -1,11 +1,15 @@
 import 'dart:developer';
 
-import 'package:appnew/dm/screens/safe_place_screen.dart';
+import 'package:appnew/user/screens/login_screen.dart';
+import 'package:appnew/user/screens/safe_place_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:fl_chart/fl_chart.dart';
 
+import '../../auth/auth_bloc.dart';
+import '../../auth/auth_event.dart';
+import '../../auth/auth_state.dart';
 import '../blocs/dashboard/user_dashboard_bloc.dart';
 import '../blocs/dashboard/user_dashboard_event.dart';
 import '../blocs/dashboard/user_dashboard_state.dart';
@@ -60,9 +64,9 @@ class _UserDashboardWrapState extends State<UserDashboardWrap> {
     // Get the current position
     Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     context.read<UserDashboardBloc>().add(FetchDataEvent(
-          latitude: position.latitude,
-          longitude: position.longitude,
-        ));
+      latitude: position.latitude,
+      longitude: position.longitude,
+    ));
   }
 
   @override
@@ -74,10 +78,18 @@ class _UserDashboardWrapState extends State<UserDashboardWrap> {
           backgroundColor: Colors.blue,
           elevation: 0,
           actions: [
-            IconButton(
-              icon: const Icon(Icons.exit_to_app),
-              onPressed: () {
-
+            BlocBuilder<AuthBloc, AuthState>(
+              builder: (context, state) {
+                return IconButton(
+                  icon: const Icon(Icons.exit_to_app),
+                  onPressed: () {
+                    context.read<AuthBloc>().add(
+                      LogoutRequested(),
+                    );
+                    Navigator.pushReplacement(
+                        context, MaterialPageRoute(builder: (context) => UserLoginScreen()));
+                  },
+                );
               },
             ),
           ],
@@ -94,7 +106,7 @@ class _UserDashboardWrapState extends State<UserDashboardWrap> {
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,8 +136,8 @@ class _UserDashboardWrapState extends State<UserDashboardWrap> {
                           ],
                         ),
                         ElevatedButton(
-                            onPressed: (){
-                              Navigator.pushReplacement(
+                            onPressed: () {
+                              Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => SafePlaceScreen(areaId: 1)));
