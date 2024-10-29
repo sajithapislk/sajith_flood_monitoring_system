@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -25,6 +27,7 @@ class User extends Authenticatable
         'tp',
         'guardian_tp',
         'area_id',
+        'risk_alert'
     ];
 
     /**
@@ -46,4 +49,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'tp_verified_at' => 'datetime',
     ];
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
+    public function monitorPlaces()
+    {
+        return $this->hasMany(MonitorPlace::class,'area_id','area_id');
+    }
+    public function unreadNotifications()
+    {
+        return $this->notifications()->whereNull('read_at');
+    }
+    public function scopeUnreadNotifications(Builder $query)
+    {
+        return $query->whereNull('read_at');
+    }
 }

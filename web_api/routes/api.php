@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\RiskUserController;
 use App\Http\Controllers\Api\SafetyPlaceController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\PredictionController;
+use App\Http\Controllers\Api\User\DashboardController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -38,7 +39,7 @@ Route::prefix('user')->group(function () {
 
     Route::group(['middleware' => ['auth:sanctum', 'ability:user:*']], function () {
         Route::get('logout',[UserController::class,'logout']);
-
+        Route::get('dashboard',DashboardController::class);
         Route::get('monitor-place',[MonitorPlaceController::class,'index']);
         Route::get('safety-place/{area}',[SafetyPlaceController::class,'place']);
         Route::post('risk-user',[RiskUserController::class,'store']);

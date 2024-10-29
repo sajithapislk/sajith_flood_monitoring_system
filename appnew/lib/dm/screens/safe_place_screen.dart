@@ -6,10 +6,9 @@ import '../blocs/safePlace/safe_place_event.dart';
 import '../blocs/safePlace/safe_place_state.dart';
 
 class SafePlaceScreen extends StatefulWidget {
-  int id;
   int areaId;
 
-  SafePlaceScreen({super.key, required this.id, required this.areaId});
+  SafePlaceScreen({super.key, required this.areaId});
 
   @override
   State<SafePlaceScreen> createState() => _SafePlaceScreenState();
