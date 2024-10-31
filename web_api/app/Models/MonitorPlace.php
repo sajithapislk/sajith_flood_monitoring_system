@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Observers\MonitorPlaceObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 
 class MonitorPlace extends Model
 {

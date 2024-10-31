@@ -1,48 +1,85 @@
+<<<<<<< Updated upstream:appnew/lib/dm/screens/home_screen.dart
+=======
 import 'package:appnew/auth/auth_bloc.dart';
 import 'package:appnew/auth/auth_event.dart';
 import 'package:appnew/auth/auth_state.dart';
 import 'package:appnew/dm/screens/login_screen.dart';
+import 'package:appnew/dm/screens/risk_people_screen.dart';
+>>>>>>> Stashed changes:appnew/lib/dm/screens/dm_dashboard_screen.dart
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-class DmDashboardScreen extends StatefulWidget {
-  const DmDashboardScreen({Key? key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<DmDashboardScreen> createState() => _DmDashboardScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _DmDashboardScreenState extends State<DmDashboardScreen> {
+class _HomeScreenState extends State<HomeScreen> {
 
+<<<<<<< Updated upstream:appnew/lib/dm/screens/home_screen.dart
   List<Items> myList = [
     Items(
         title: "About",
         subtitle: "Information Of the System",
         img: "assets/flood.png",
-        onTab: () => {}
+        onTab: ()  => {}
     ),
     Items(
         title: "Flood Status",
         subtitle: "Monitor Place",
         img: "assets/man_walking.png",
-        onTab: () => {}
+        onTab: ()  => {}
     ),
     Items(
         title: "Risk People",
         subtitle: "how many people in your area and their are information",
         img: "assets/safety-place.png",
-        onTab: () => {}
+        onTab: ()  => {}
     ),
     Items(
-      title: "Confirmed Users",
-      subtitle: "Who are the confirmed of arrival of safety places ",
-      img: "assets/confirmed.jpg",
-      onTab: () => {},
+        title: "Confirmed Users",
+        subtitle: "Who are the confirmed of arrival of safety places ",
+        img: "assets/confirmed.jpg",
+        onTab: () => {},
     )
   ];
+=======
+
+>>>>>>> Stashed changes:appnew/lib/dm/screens/dm_dashboard_screen.dart
 
   @override
   Widget build(BuildContext context) {
+    List<Items> myList = [
+      Items(
+          title: "About",
+          subtitle: "Information Of the System",
+          img: "assets/flood.png",
+          onTab: () => {}
+      ),
+      Items(
+          title: "Flood Status",
+          subtitle: "Monitor Place",
+          img: "assets/man_walking.png",
+          onTab: () => {}
+      ),
+      Items(
+          title: "Risk People",
+          subtitle: "how many people in your area and their are information",
+          img: "assets/safety-place.png",
+          onTab: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => RiskPeopleScreen()))
+      ),
+      Items(
+        title: "Confirmed Users",
+        subtitle: "Who are the confirmed of arrival of safety places ",
+        img: "assets/confirmed.jpg",
+        onTab: () => {},
+      )
+    ];
+
     var color = 0xff007aa5;
     return Scaffold(
       backgroundColor: const Color(0xff000080),
@@ -76,20 +113,10 @@ class _DmDashboardScreenState extends State<DmDashboardScreen> {
                       ),
                     ],
                   ),
-                  BlocBuilder<AuthBloc, AuthState>(
-                    builder: (context, state) {
-                      return IconButton(
-                        alignment: Alignment.topCenter,
-                        icon: const Icon(Icons.exit_to_app, color: Colors.white,),
-                        onPressed: () {
-                          context.read<AuthBloc>().add(
-                            LogoutRequested(),
-                          );
-                          Navigator.pushReplacement(
-                              context, MaterialPageRoute(builder: (context) => DmLoginScreen()));
-                        },
-                      );
-                    },
+                  IconButton(
+                    alignment: Alignment.topCenter,
+                    icon: const Icon(Icons.exit_to_app,color: Colors.white,),
+                    onPressed: () {},
                   )
                 ],
               ),
@@ -168,8 +195,9 @@ class Items {
   String img;
   GestureTapCallback onTab;
 
-  Items({required this.title,
-    required this.subtitle,
-    required this.img,
-    required this.onTab});
+  Items(
+      {required this.title,
+        required this.subtitle,
+        required this.img,
+        required this.onTab});
 }

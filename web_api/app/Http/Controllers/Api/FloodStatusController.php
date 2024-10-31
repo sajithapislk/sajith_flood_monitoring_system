@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FloodStatus\FloodStatusStorePostRequest;
+use App\Http\Services\RandomForestPrediction;
 use App\Models\Area;
 use App\Models\FloodStatus;
 use App\Models\MonitorPlace;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class FloodStatusController extends Controller
 {
@@ -41,14 +43,13 @@ class FloodStatusController extends Controller
         ]);
 
         $mp = MonitorPlace::find($id);
+        $randomForestResult = (new RandomForestPrediction('flood.csv',[$mp->id, null ,null, null, null, null,null, $request->date]))->predictResult();
 
-        if($waterLevel >= $mp->d_level){
+        Log::info($randomForestResult);
+        if($randomForestResult=="Danger Area"){
+            Log::alert('Danger Area');
             $mp->update([
                 'is_danger' => true
-            ]);
-        }else{
-            $mp->update([
-                'is_danger' => false
             ]);
         }
     }
