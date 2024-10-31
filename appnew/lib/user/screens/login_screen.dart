@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../dm/screens/login_screen.dart';
-import 'dashboard_screen.dart';
+import 'user_dashboard_screen.dart';
 
 class UserLoginScreen extends StatefulWidget {
   const UserLoginScreen({super.key});
@@ -96,7 +96,7 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => DashboardScreen()),
+                          builder: (context) => UserDashboardScreen()),
                     );
                   }
                   if (state is AuthFailure) {

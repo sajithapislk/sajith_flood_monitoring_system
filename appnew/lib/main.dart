@@ -1,6 +1,7 @@
 import 'package:appnew/auth/auth_bloc.dart';
-import 'package:appnew/dm/screens/home_screen.dart';
-import 'package:appnew/user/screens/dashboard_screen.dart';
+import 'package:appnew/dm/screens/dm_dashboard_screen.dart';
+import 'package:appnew/dm/screens/risk_people_screen.dart';
+import 'package:appnew/user/screens/user_dashboard_screen.dart';
 import 'package:appnew/user/screens/login_screen.dart';
 import 'package:appnew/user/screens/map_screen.dart';
 import 'package:appnew/dm/screens/monitor_place_screen.dart';
@@ -45,7 +46,7 @@ Future<void> main() async {
       create: (context) =>
       AuthBloc()
         ..add(AppStarted()),
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }
@@ -62,14 +63,14 @@ class MyApp extends StatelessWidget {
           if (state is Authenticated) {
             // Navigate to DashboardScreen when authenticated
             Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => state.type == 'dm' ? MonitorPlaceScreen() : DashboardScreen()));
+                context, MaterialPageRoute(builder: (context) => state.type == 'dm' ? const DmDashboardScreen() : const UserDashboardScreen()));
           }else if (state is Unauthenticated) {
             // Navigate to DashboardScreen when authenticated
             Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => UserLoginScreen()));
+                context, MaterialPageRoute(builder: (context) => const UserLoginScreen()));
           }
         },
-        child: Center(child: CircularProgressIndicator()),
+        child: const Center(child: CircularProgressIndicator()),
       ),
     );
   }

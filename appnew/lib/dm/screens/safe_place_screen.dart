@@ -1,10 +1,7 @@
-import 'dart:developer';
-
-import 'package:appnew/user/blocs/safePlace/safe_place_bloc.dart';
-import 'package:appnew/user/screens/map_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../blocs/safePlace/safe_place_bloc.dart';
 import '../blocs/safePlace/safe_place_event.dart';
 import '../blocs/safePlace/safe_place_state.dart';
 
@@ -80,10 +77,7 @@ class _SafePlaceScreenState extends State<SafePlaceScreen> {
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       children: [
-                                        ElevatedButton(
-                                            onPressed: () => Navigator.of(context)
-                                                .push(MaterialPageRoute(builder: (context) => MapScreen(lat: double.parse(data.latitude), lon: double.parse(data.longitude)))),
-                                          child: Text("Map 1")),
+                                        ElevatedButton(onPressed: () => {}, child: Text("Map")),
                                         ElevatedButton(
                                           onPressed: () => {},
                                           child: Text("confirm"),

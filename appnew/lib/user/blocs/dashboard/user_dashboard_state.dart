@@ -1,10 +1,20 @@
-part of 'user_dashboard_bloc.dart';
+import 'package:appnew/user/models/user_dashboard_model.dart';
+import 'package:equatable/equatable.dart';
 
-sealed class UserDashboardState extends Equatable {
-  const UserDashboardState();
-}
-
-final class UserDashboardInitial extends UserDashboardState {
+abstract class UserDashboardState extends Equatable {
   @override
   List<Object> get props => [];
+}
+
+class UserDashboardInitial extends UserDashboardState {}
+
+class UserDashboardLoaded extends UserDashboardState {
+  final UserDashboardModel data;
+
+  UserDashboardLoaded(
+      this.data,
+      );
+
+  @override
+  List<Object> get props => [data];
 }

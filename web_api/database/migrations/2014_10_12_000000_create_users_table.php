@@ -24,7 +24,8 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
-            $table->foreign('area_id')->references('id')->on('areas'); 
+            $table->foreign('area_id')->references('id')->on('areas');
+            $table->boolean('risk_alert')->default(false);
         });
     }
 

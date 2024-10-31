@@ -38,13 +38,15 @@ class ApiService {
     }
   }
 
-  Future<http.Response> getData(String apiUrl) async {
-    final fullUrl = '$_baseUrl$apiUrl';
-    final token = await _getToken();
+  Future<http.Response> getData(String apiUrl, {Map<String, dynamic>? data}) async {
+    final queryParams = data?.map((key, value) => MapEntry(key, value.toString()));
 
+    final uri = Uri.parse('$_baseUrl$apiUrl').replace(queryParameters: queryParams);
+    final token = await _getToken();
+    log(uri.toString());
     try {
       final response = await http.get(
-        Uri.parse(fullUrl),
+        uri,
         headers: {
           HttpHeaders.contentTypeHeader: 'application/json',
           HttpHeaders.acceptHeader: 'application/json',

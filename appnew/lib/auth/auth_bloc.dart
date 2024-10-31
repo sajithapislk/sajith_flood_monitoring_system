@@ -16,7 +16,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AppStarted>(_checkAuthStatus);
     on<UserLoginRequested>(_onUserLoginRequested);
     on<DmLoginRequested>(_onDmLoginRequested);
-    // on<RegisterRequested>(_onRegisterRequested);
+    on<LogoutRequested>(_onLogout);
   }
 
   Future<void>  _checkAuthStatus(AppStarted event, Emitter<AuthState> emit) async {
@@ -54,6 +54,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await localStorage.setString('token', response.token);
       await localStorage.setString('type', 'dm');
       emit(Authenticated(type: 'dm'));
+
+    } on Exception catch (e) {
+      emit(AuthFailure(error: e.toString()));
+    }
+  }
+  Future<void> _onLogout(LogoutRequested event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
+
+    try {
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      await localStorage.clear();
+      emit(Unauthenticated());
 
     } on Exception catch (e) {
       emit(AuthFailure(error: e.toString()));

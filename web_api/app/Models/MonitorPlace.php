@@ -11,6 +11,8 @@ class MonitorPlace extends Model
 {
     use HasFactory;
 
+    protected $appends = ['water_level'];
+
     protected $fillable = [
         'area_id',
         'is_danger',
@@ -23,4 +25,9 @@ class MonitorPlace extends Model
     {
         return $this->hasOne(Area::class,'id','area_id');
     }
+    public function getWaterLevelAttribute() {
+        return FloodStatus::where('monitor_place_id',$this->id)->latest()->value('water_level');
+    }
+
+
 }
