@@ -1,3 +1,11 @@
+<<<<<<< Updated upstream:appnew/lib/dm/screens/home_screen.dart
+=======
+import 'package:appnew/auth/auth_bloc.dart';
+import 'package:appnew/auth/auth_event.dart';
+import 'package:appnew/auth/auth_state.dart';
+import 'package:appnew/dm/screens/login_screen.dart';
+import 'package:appnew/dm/screens/risk_people_screen.dart';
+>>>>>>> Stashed changes:appnew/lib/dm/screens/dm_dashboard_screen.dart
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -9,6 +17,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
+<<<<<<< Updated upstream:appnew/lib/dm/screens/home_screen.dart
   List<Items> myList = [
     Items(
         title: "About",
@@ -35,9 +44,42 @@ class _HomeScreenState extends State<HomeScreen> {
         onTab: () => {},
     )
   ];
+=======
+
+>>>>>>> Stashed changes:appnew/lib/dm/screens/dm_dashboard_screen.dart
 
   @override
   Widget build(BuildContext context) {
+    List<Items> myList = [
+      Items(
+          title: "About",
+          subtitle: "Information Of the System",
+          img: "assets/flood.png",
+          onTab: () => {}
+      ),
+      Items(
+          title: "Flood Status",
+          subtitle: "Monitor Place",
+          img: "assets/man_walking.png",
+          onTab: () => {}
+      ),
+      Items(
+          title: "Risk People",
+          subtitle: "how many people in your area and their are information",
+          img: "assets/safety-place.png",
+          onTab: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => RiskPeopleScreen()))
+      ),
+      Items(
+        title: "Confirmed Users",
+        subtitle: "Who are the confirmed of arrival of safety places ",
+        img: "assets/confirmed.jpg",
+        onTab: () => {},
+      )
+    ];
+
     var color = 0xff007aa5;
     return Scaffold(
       backgroundColor: const Color(0xff000080),
