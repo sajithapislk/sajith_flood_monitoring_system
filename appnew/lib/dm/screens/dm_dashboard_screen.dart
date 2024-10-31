@@ -1,23 +1,15 @@
-<<<<<<< Updated upstream:appnew/lib/dm/screens/home_screen.dart
-=======
-import 'package:appnew/auth/auth_bloc.dart';
-import 'package:appnew/auth/auth_event.dart';
-import 'package:appnew/auth/auth_state.dart';
-import 'package:appnew/dm/screens/login_screen.dart';
 import 'package:appnew/dm/screens/risk_people_screen.dart';
->>>>>>> Stashed changes:appnew/lib/dm/screens/dm_dashboard_screen.dart
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class DmDashboardScreen extends StatefulWidget {
+  const DmDashboardScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<DmDashboardScreen> createState() => _DmDashboardScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _DmDashboardScreenState extends State<DmDashboardScreen> {
 
-<<<<<<< Updated upstream:appnew/lib/dm/screens/home_screen.dart
   List<Items> myList = [
     Items(
         title: "About",
@@ -44,9 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
         onTab: () => {},
     )
   ];
-=======
-
->>>>>>> Stashed changes:appnew/lib/dm/screens/dm_dashboard_screen.dart
 
   @override
   Widget build(BuildContext context) {
