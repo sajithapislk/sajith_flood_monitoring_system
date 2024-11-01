@@ -3,18 +3,12 @@
 namespace App\Console\Commands;
 
 use App\Models\MonitorPlace;
-use App\Services\FirebaseService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Http;
 
 class SendWarningNotification extends Command
 {
-    protected $firebaseService;
-
-    public function __construct(FirebaseService $firebaseService)
-    {
-        $this->firebaseService = $firebaseService;
-    }
     /**
      * The name and signature of the console command.
      *
@@ -27,7 +21,7 @@ class SendWarningNotification extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Send a warning notification to devices.';
 
     /**
      * Execute the console command.
@@ -36,17 +30,32 @@ class SendWarningNotification extends Command
     {
         MonitorPlace::where('updated_at', '<', now()->subMinutes(5))->get()->each(function ($monitorPlace) {
             Log::alert($monitorPlace);
+
             $deviceToken = 'device_token';
             $title = 'title';
             $message = 'message';
-            $data = 'data'; // Optional custom data payload
+            $data = ['custom_key' => 'custom_value']; // Custom data payload if needed
 
-            $success = $this->firebaseService->sendNotification($deviceToken, $title, $message, $data);
+            // Prepare Firebase notification payload
+            $notificationPayload = [
+                'to' => $deviceToken,
+                'notification' => [
+                    'title' => $title,
+                    'body' => $message,
+                ],
+                'data' => $data,
+            ];
 
-            if ($success) {
-                return response()->json(['message' => 'Notification sent successfully'], 200);
+            // Send notification using Laravel's HTTP client
+            $response = Http::withHeaders([
+                'Authorization' => 'key=YOUR_FIREBASE_SERVER_KEY',
+                'Content-Type' => 'application/json',
+            ])->post('https://fcm.googleapis.com/fcm/send', $notificationPayload);
+
+            if ($response->successful()) {
+                Log::info('Notification sent successfully');
             } else {
-                return response()->json(['message' => 'Failed to send notification'], 500);
+                Log::error('Failed to send notification', ['response' => $response->body()]);
             }
         });
     }

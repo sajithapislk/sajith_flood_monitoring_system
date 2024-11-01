@@ -1,52 +1,40 @@
 <?php
-
 namespace App\Services;
 
-use GuzzleHttp\Client;
+use Kreait\Firebase\Factory;
+use Kreait\Firebase\Messaging\CloudMessage;
+use Illuminate\Support\Facades\Log;
 
 class FirebaseService
 {
-    protected $serverKey;
+    protected $messaging;
 
     public function __construct()
     {
-        $this->serverKey = env('FIREBASE_SERVER_KEY'); // Add the server key in your .env file
+        $firebase = (new Factory)
+            ->withServiceAccount(storage_path('app/flood-system-c44c3-firebase-adminsdk-y4rt4-dad4f4c013.json'));
+
+        $this->messaging = $firebase->createMessaging();
     }
 
-    /**
-     * Send a notification to a specific device via FCM
-     *
-     * @param  string  $deviceToken
-     * @param  string  $title
-     * @param  string  $message
-     * @param  array   $data
-     * @return bool
-     */
-    public function sendNotification($deviceToken, $title, $message, $data = [])
+    public function sendNotification(string $deviceToken, string $title, string $message, array $data = []): bool
     {
-        $url = 'https://fcm.googleapis.com/fcm/send';
-
-        $fields = [
-            'to' => $deviceToken, // Device Token
-            'notification' => [
-                'title' => $title,
-                'body'  => $message,
-            ],
-            'data' => $data, // Custom data payload if needed
+        $notification = [
+            'title' => $title,
+            'body' => $message,
         ];
 
-        $headers = [
-            'Authorization' => 'key=' . $this->serverKey,
-            'Content-Type'  => 'application/json',
-        ];
+        $cloudMessage = CloudMessage::withTarget('token', $deviceToken)
+            ->withNotification($notification)
+            ->withData($data);
 
-        $client = new Client();
-
-        $response = $client->post($url, [
-            'headers' => $headers,
-            'json'    => $fields,
-        ]);
-
-        return $response->getStatusCode() === 200;
+        try {
+            $this->messaging->send($cloudMessage);
+            Log::info('Notification sent successfully');
+            return true;
+        } catch (\Exception $e) {
+            Log::error('Failed to send notification', ['error' => $e->getMessage()]);
+            return false;
+        }
     }
 }
