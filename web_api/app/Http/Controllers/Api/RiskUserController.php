@@ -46,8 +46,6 @@ class RiskUserController extends Controller
             return "Already added";
         }
 
-        (new CsvController)->write("Danger Area",$mp);
-
         $riskUserData['user_id'] = $user->id;
 
         $message = [
