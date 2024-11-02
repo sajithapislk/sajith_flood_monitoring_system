@@ -40,7 +40,8 @@ Future<void> main() async {
       print('Message body: ${message.notification?.body}');
     }
   });
-
+  String? token = await messaging.getToken();
+  print("FCM Token: $token");
   runApp(
     BlocProvider(
       create: (context) =>

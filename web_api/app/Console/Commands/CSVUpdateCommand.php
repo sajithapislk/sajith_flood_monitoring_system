@@ -30,15 +30,12 @@ class CSVUpdateCommand extends Command
      */
     public function handle(): void
     {
-        $mp = MonitorPlace::all();
-        foreach ($mp as $key => $row) {
-            $ru = RiskUser::whereDate('created_at', Carbon::today())
-            ->where('monitor_place_id',$row->id)
-            ->get();
+        MonitorPlace::where('updated_at', '<', now()->subMinutes(5))->get()->each(function ($monitorPlace) {
+            $ru = RiskUser::where('created_at',now()->subMinutes(5))->where('monitor_place_id',$monitorPlace->id)->get();
             if(count($ru)==0){
-                (new CsvController)->write("Safe Area",$row->id);
+                (new CsvController)->write("Danger Area",$monitorPlace->id);
             }
-        }
+        });
 
     }
 }
