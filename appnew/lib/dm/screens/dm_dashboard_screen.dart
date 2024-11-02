@@ -1,4 +1,6 @@
 import 'package:appnew/auth/auth_event.dart';
+import 'package:appnew/dm/screens/login_screen.dart';
+import 'package:appnew/dm/screens/monitor_place_screen.dart';
 import 'package:appnew/dm/screens/risk_people_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,26 +15,14 @@ class DmDashboardScreen extends StatefulWidget {
 }
 
 class _DmDashboardScreenState extends State<DmDashboardScreen> {
-
   List<Items> myList = [
-    Items(
-        title: "About",
-        subtitle: "Information Of the System",
-        img: "assets/flood.png",
-        onTab: () => {}
-    ),
-    Items(
-        title: "Flood Status",
-        subtitle: "Monitor Place",
-        img: "assets/man_walking.png",
-        onTab: () => {}
-    ),
+    Items(title: "About", subtitle: "Information Of the System", img: "assets/flood.png", onTab: () => {}),
+    Items(title: "Flood Status", subtitle: "Monitor Place", img: "assets/man_walking.png", onTab: () => {}),
     Items(
         title: "Risk People",
         subtitle: "how many people in your area and their are information",
         img: "assets/safety-place.png",
-        onTab: () => {}
-    ),
+        onTab: () => {}),
     Items(
       title: "Confirmed Users",
       subtitle: "Who are the confirmed of arrival of safety places ",
@@ -44,28 +34,17 @@ class _DmDashboardScreenState extends State<DmDashboardScreen> {
   @override
   Widget build(BuildContext context) {
     List<Items> myList = [
-      Items(
-          title: "About",
-          subtitle: "Information Of the System",
-          img: "assets/flood.png",
-          onTab: () => {}
-      ),
+      Items(title: "About", subtitle: "Information Of the System", img: "assets/flood.png", onTab: () => {}),
       Items(
           title: "Flood Status",
           subtitle: "Monitor Place",
           img: "assets/man_walking.png",
-          onTab: () => {}
-      ),
+          onTab: () => Navigator.push(context, MaterialPageRoute(builder: (context) => MonitorPlaceScreen()))),
       Items(
           title: "Risk People",
           subtitle: "how many people in your area and their are information",
           img: "assets/safety-place.png",
-          onTab: () =>
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => RiskPeopleScreen()))
-      ),
+          onTab: () => Navigator.push(context, MaterialPageRoute(builder: (context) => RiskPeopleScreen()))),
       Items(
         title: "Confirmed Users",
         subtitle: "Who are the confirmed of arrival of safety places ",
@@ -92,30 +71,29 @@ class _DmDashboardScreenState extends State<DmDashboardScreen> {
                       children: [
                         Text(
                           "dm",
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
+                          style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(
                           height: 4,
                         ),
                         const Text(
                           "Home",
-                          style: TextStyle(
-                              color: Color(0xffa29aac),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600),
+                          style: TextStyle(color: Color(0xffa29aac), fontSize: 14, fontWeight: FontWeight.w600),
                         ),
                       ],
                     ),
                     IconButton(
                       alignment: Alignment.topCenter,
-                      icon: const Icon(Icons.exit_to_app, color: Colors.white,),
+                      icon: const Icon(
+                        Icons.exit_to_app,
+                        color: Colors.white,
+                      ),
                       onPressed: () {
                         context.read<AuthBloc>().add(
-                          LogoutRequested(),
-                        );
+                              LogoutRequested(),
+                            );
+                        Navigator.pushReplacement(
+                            context, MaterialPageRoute(builder: (context) => const DmLoginScreen()));
                       },
                     )
                   ],
@@ -135,9 +113,7 @@ class _DmDashboardScreenState extends State<DmDashboardScreen> {
                       return InkWell(
                         onTap: data.onTab,
                         child: Container(
-                          decoration: BoxDecoration(
-                              color: Color(color),
-                              borderRadius: BorderRadius.circular(10)),
+                          decoration: BoxDecoration(color: Color(color), borderRadius: BorderRadius.circular(10)),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
@@ -150,20 +126,15 @@ class _DmDashboardScreenState extends State<DmDashboardScreen> {
                               ),
                               Text(
                                 data.title,
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600),
+                                style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
                               ),
                               const SizedBox(
                                 height: 8,
                               ),
                               Text(
                                 data.subtitle,
-                                style: const TextStyle(
-                                    color: Colors.white38,
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w600),
+                                style:
+                                    const TextStyle(color: Colors.white38, fontSize: 10, fontWeight: FontWeight.w600),
                               ),
                               const SizedBox(
                                 height: 14,
@@ -196,8 +167,5 @@ class Items {
   String img;
   GestureTapCallback onTab;
 
-  Items({required this.title,
-    required this.subtitle,
-    required this.img,
-    required this.onTab});
+  Items({required this.title, required this.subtitle, required this.img, required this.onTab});
 }

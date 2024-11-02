@@ -1,5 +1,6 @@
 import 'package:appnew/user/blocs/monitorPlace/monitor_place_bloc.dart';
 import 'package:appnew/user/blocs/monitorPlace/monitor_place_state.dart';
+import 'package:appnew/user/screens/safe_place_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -64,7 +65,10 @@ class _MonitorPlaceScreenState extends State<MonitorPlaceScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 ElevatedButton(onPressed: () {}, child: const Text("View")),
-                                ElevatedButton(onPressed: () => {}, child: const Text("Safe Place")),
+                                ElevatedButton(
+                                    onPressed: () => Navigator.push(
+                                        context, MaterialPageRoute(builder: (context) => SafePlaceScreen(areaId: 1))),
+                                    child: const Text("Safe Place")),
                               ],
                             )
                           ],
