@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Web\AreaController;
 use App\Http\Controllers\Web\AdminController;
+use App\Http\Controllers\Web\AnalysisReportController;
 use App\Http\Controllers\Web\ConfirmUserSPController;
 use App\Http\Controllers\Web\FloodStatusController;
 use App\Http\Controllers\Web\MonitorPlaceController;
@@ -34,6 +35,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::middleware(['auth:admin', 'PreventBackHistory'])->group(function () {
         Route::get('home', [FloodStatusController::class, 'home']);
+
+        Route::get('analysis-report',AnalysisReportController::class);
 
         Route::resource('area', AreaController::class);
         Route::resource('monitor-place', MonitorPlaceController::class);

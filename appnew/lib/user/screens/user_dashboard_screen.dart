@@ -64,9 +64,9 @@ class _UserDashboardWrapState extends State<UserDashboardWrap> {
     // Get the current position
     Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     context.read<UserDashboardBloc>().add(FetchDataEvent(
-      latitude: position.latitude,
-      longitude: position.longitude,
-    ));
+          latitude: position.latitude,
+          longitude: position.longitude,
+        ));
   }
 
   @override
@@ -84,10 +84,9 @@ class _UserDashboardWrapState extends State<UserDashboardWrap> {
                   icon: const Icon(Icons.exit_to_app),
                   onPressed: () {
                     context.read<AuthBloc>().add(
-                      LogoutRequested(),
-                    );
-                    Navigator.pushReplacement(
-                        context, MaterialPageRoute(builder: (context) => UserLoginScreen()));
+                          LogoutRequested(),
+                        );
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => UserLoginScreen()));
                   },
                 );
               },
@@ -100,52 +99,60 @@ class _UserDashboardWrapState extends State<UserDashboardWrap> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Card(
-                  elevation: 4,
-                  color: Colors.orange[100],
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: const [
-                                Icon(Icons.warning_amber_rounded, color: Colors.orange),
-                                SizedBox(width: 8),
-                                Text(
-                                  'Current Risk Level',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
+                BlocBuilder<UserDashboardBloc, UserDashboardState>(
+                  builder: (context, state) {
+                    if (state is UserDashboardLoaded) {
+                      if(state.data.nearestPlace.isDanger==0){
+                        return SizedBox();
+                      }
+                      return Card(
+                        elevation: 4,
+                        color: Colors.orange[100],
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: const [
+                                      Icon(Icons.warning_amber_rounded, color: Colors.orange),
+                                      SizedBox(width: 8),
+                                      Text(
+                                        'Current Risk Level',
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 8),
-                            const Text(
-                              'High',
-                              style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.orange,
+                                  const SizedBox(height: 8),
+                                  const Text(
+                                    'High',
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.orange,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ],
+                              ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context, MaterialPageRoute(builder: (context) => SafePlaceScreen(areaId: 1)));
+                                  },
+                                  child: Text("Safe Places"))
+                            ],
+                          ),
                         ),
-                        ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => SafePlaceScreen(areaId: 1)));
-                            }, child: Text("Safe Places")
-                        )
-                      ],
-                    ),
-                  ),
+                      );
+                    }
+                    return CircularProgressIndicator();
+                  },
                 ),
                 const SizedBox(height: 16),
 
