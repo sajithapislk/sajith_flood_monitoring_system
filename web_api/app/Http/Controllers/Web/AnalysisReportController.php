@@ -15,35 +15,51 @@ class AnalysisReportController extends Controller
      */
     public function __invoke(Request $request)
     {
-        // Query to get the count of RiskUser records grouped by date
-        $riskUserCounts = RiskUser::selectRaw('DATE(created_at) as date')
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+        $month = $request->input('month');
+        $year = $request->input('year');
+
+        $riskUserQuery = RiskUser::selectRaw('DATE(created_at) as date')
             ->selectRaw('COUNT(*) as risk_user_count')
             ->groupBy('date')
-            ->orderBy('date', 'desc')
-            ->get();
+            ->orderBy('date', 'desc');
 
-        // Query to get the count of RiskConfirmation records grouped by date
-        $riskConfirmationCounts = RiskConfirmation::selectRaw('DATE(created_at) as date')
+        $riskConfirmationQuery = RiskConfirmation::selectRaw('DATE(created_at) as date')
             ->selectRaw('COUNT(*) as risk_confirmation_count')
             ->groupBy('date')
-            ->orderBy('date', 'desc')
-            ->get();
+            ->orderBy('date', 'desc');
 
-        // Combine the data into a single collection, keyed by date
+        if ($startDate && $endDate) {
+            $riskUserQuery->whereBetween('created_at', [$startDate, $endDate]);
+            $riskConfirmationQuery->whereBetween('created_at', [$startDate, $endDate]);
+        } elseif ($month) {
+            $riskUserQuery->whereMonth('created_at', $month);
+            $riskConfirmationQuery->whereMonth('created_at', $month);
+        } elseif ($year) {
+            $riskUserQuery->whereYear('created_at', $year);
+            $riskConfirmationQuery->whereYear('created_at', $year);
+        }
+
+        $riskUserCounts = $riskUserQuery->get();
+        $riskConfirmationCounts = $riskConfirmationQuery->get();
+
         $combinedData = $this->combineDataByDate($riskUserCounts, $riskConfirmationCounts);
-        // return $combinedData;
+
         return view('admin.report.analysis-report', [
             'list' => $combinedData,
+            'start_date' => $startDate,
+            'end_date' => $endDate,
+            'month' => $month,
+            'year' => $year,
         ]);
     }
 
 
     private function combineDataByDate(Collection $riskUserCounts, Collection $riskConfirmationCounts)
     {
-        // Create an associative array to store the combined data by date
         $combined = [];
 
-        // Add risk user counts to the combined array
         foreach ($riskUserCounts as $riskUser) {
             $combined[$riskUser->date] = [
                 'date' => $riskUser->date,
@@ -52,13 +68,10 @@ class AnalysisReportController extends Controller
             ];
         }
 
-        // Add risk confirmation counts to the combined array
         foreach ($riskConfirmationCounts as $riskConfirmation) {
             if (isset($combined[$riskConfirmation->date])) {
-                // If the date exists in the array, update the risk confirmation count
                 $combined[$riskConfirmation->date]['risk_confirmation_count'] = $riskConfirmation->risk_confirmation_count;
             } else {
-                // If the date does not exist, initialize the array with default risk user count 0
                 $combined[$riskConfirmation->date] = [
                     'date' => $riskConfirmation->date,
                     'risk_user_count' => 0,
@@ -67,7 +80,6 @@ class AnalysisReportController extends Controller
             }
         }
 
-        // Convert to a collection and sort by date in descending order
         return collect($combined)->sortByDesc('date');
     }
 }
