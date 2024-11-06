@@ -102,8 +102,8 @@
                             </a>
                         </li>
 
-                        <li class="{{ request()->is('admin/confirm-user') ? 'active' : '' }}">
-                            <a class="sidenav-item-link" href="{{ url('admin/confirm-user') }}">
+                        <li class="{{ request()->is('admin/safe-place') ? 'active' : '' }}">
+                            <a class="sidenav-item-link" href="{{ url('admin/safe-place') }}">
                                 <i class="mdi mdi-view-dashboard-outline"></i>
                                 <span class="nav-text">Safety Places</span>
                             </a>
