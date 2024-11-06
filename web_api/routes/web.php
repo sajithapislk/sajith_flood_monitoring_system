@@ -49,6 +49,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
     });
 });
 Route::get('test', function () {
-    $firebaseService = app(App\Services\FirebaseService::class);
-    $firebaseService->sendNotification('eL96CU4TRR6s04r2-4KPfH:APA91bGiVJFSC47ZpZnuYZBhh9L2sbnc8fORyJphj2BFlL1IoZd-Q5GhNrF28mii2wU9kBycb5_OVL52vbd9GaUPzMUAM18fxii_jJ55l662a0X9zB0YnCM', 'Your Title', 'Your Message', []);
+    // $firebaseService = app(App\Services\FirebaseService::class);
+    // $firebaseService->sendNotification('eL96CU4TRR6s04r2-4KPfH:APA91bGiVJFSC47ZpZnuYZBhh9L2sbnc8fORyJphj2BFlL1IoZd-Q5GhNrF28mii2wU9kBycb5_OVL52vbd9GaUPzMUAM18fxii_jJ55l662a0X9zB0YnCM', 'Your Title', 'Your Message', []);
 });

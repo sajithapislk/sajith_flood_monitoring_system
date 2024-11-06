@@ -44,7 +44,6 @@ class ApiService {
     final uri = Uri.parse('$_baseUrl$apiUrl').replace(queryParameters: queryParams);
     final token = await _getToken();
     log(uri.toString());
-    try {
       final response = await http.get(
         uri,
         headers: {
@@ -54,10 +53,6 @@ class ApiService {
         },
       );
       return response;
-    } catch (e) {
-      _handleError(e);
-      rethrow;
-    }
   }
 
   void _handleError(e) {

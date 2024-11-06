@@ -1,4 +1,6 @@
-part of 'risk_people_bloc.dart';
+import 'package:equatable/equatable.dart';
+
+import '../../models/risk_people_model.dart';
 
 abstract class RiskPeopleState extends Equatable {
   @override
@@ -7,10 +9,10 @@ abstract class RiskPeopleState extends Equatable {
 
   class RiskPeopleInitial extends RiskPeopleState {}
 
-  class MonitorPlaceLoaded extends RiskPeopleState {
+  class RiskPeopleLoaded extends RiskPeopleState {
   final List<RiskPeopleModel> list;
 
-  MonitorPlaceLoaded(
+  RiskPeopleLoaded(
   this.list,
   );
 

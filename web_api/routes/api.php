@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AreaController;
+use App\Http\Controllers\Api\ConfirmUserController;
 use App\Http\Controllers\Api\DMController;
 use App\Http\Controllers\Api\FloodStatusController;
 use App\Http\Controllers\Api\MonitorPlaceController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\Api\SafetyPlaceController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\PredictionController;
 use App\Http\Controllers\Api\User\DashboardController;
+use App\Http\Controllers\Web\ConfirmUserSPController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -54,6 +56,7 @@ Route::prefix('dm')->group(function () {
     Route::group(['middleware' => ['auth:sanctum','ability:dm:*']], function () {
         Route::get('logout',[DMController::class,'logout']);
 
+        Route::get('confirm-user',[ConfirmUserController::class,'index']);
         Route::get('risk-user',[RiskUserController::class,'index']);
         Route::get('monitor-place',[MonitorPlaceController::class,'index']);
         Route::get('safety-place/{area}',[SafetyPlaceController::class,'place']);

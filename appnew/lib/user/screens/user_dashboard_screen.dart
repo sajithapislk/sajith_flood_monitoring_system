@@ -2,14 +2,17 @@ import 'dart:developer';
 
 import 'package:appnew/user/screens/login_screen.dart';
 import 'package:appnew/user/screens/safe_place_screen.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 import '../../auth/auth_bloc.dart';
 import '../../auth/auth_event.dart';
 import '../../auth/auth_state.dart';
+import '../../main.dart';
 import '../blocs/dashboard/user_dashboard_bloc.dart';
 import '../blocs/dashboard/user_dashboard_event.dart';
 import '../blocs/dashboard/user_dashboard_state.dart';
@@ -69,9 +72,65 @@ class _UserDashboardWrapState extends State<UserDashboardWrap> {
         ));
   }
 
+  Future<void> fetchNotification(BuildContext context) async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      print('User granted permission');
+    } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
+      print('User granted provisional permission');
+    } else {
+      print('User declined or has not accepted permission');
+    }
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      if (message.notification != null) {
+        print('Message title: ${message.notification?.title}');
+        print('Message body: ${message.notification?.body}');
+      }
+      if (message.notification != null) {
+        _showNotification(
+          message.notification!.title ?? 'No title',
+          message.notification!.body ?? 'No body',
+        );
+      }
+    });
+    String? token = await messaging.getToken();
+    print("FCM Token: $token");
+  }
+  Future<void> _showNotification(String title, String body) async {
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+    AndroidNotificationDetails(
+      'your channel id',
+      'your channel name',
+      importance: Importance.max,
+      priority: Priority.high,
+      ticker: 'ticker',
+    );
+
+    const NotificationDetails platformChannelSpecifics =
+    NotificationDetails(android: androidPlatformChannelSpecifics);
+
+    await flutterLocalNotificationsPlugin.show(
+      0,
+      title,
+      body,
+      platformChannelSpecifics,
+      payload: 'item x',
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     fetchNearestRainGauge(context);
+    fetchNotification(context);
+
     return Scaffold(
         appBar: AppBar(
           title: const Text('Flood Prediction System'),
@@ -102,7 +161,7 @@ class _UserDashboardWrapState extends State<UserDashboardWrap> {
                 BlocBuilder<UserDashboardBloc, UserDashboardState>(
                   builder: (context, state) {
                     if (state is UserDashboardLoaded) {
-                      if(state.data.nearestPlace.isDanger==0){
+                      if (state.data.nearestPlace.isDanger == 0) {
                         return SizedBox();
                       }
                       return Card(

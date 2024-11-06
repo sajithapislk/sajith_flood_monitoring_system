@@ -1,4 +1,4 @@
-part of 'risk_people_bloc.dart';
+import 'package:equatable/equatable.dart';
 
 abstract class RiskPeopleEvent extends Equatable {
   @override

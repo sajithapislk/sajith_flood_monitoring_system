@@ -1,4 +1,5 @@
 import 'package:appnew/auth/auth_event.dart';
+import 'package:appnew/dm/screens/confirm_user_screen.dart';
 import 'package:appnew/dm/screens/login_screen.dart';
 import 'package:appnew/dm/screens/monitor_place_screen.dart';
 import 'package:appnew/dm/screens/risk_people_screen.dart';
@@ -49,7 +50,7 @@ class _DmDashboardScreenState extends State<DmDashboardScreen> {
         title: "Confirmed Users",
         subtitle: "Who are the confirmed of arrival of safety places ",
         img: "assets/confirmed.jpg",
-        onTab: () => {},
+        onTab: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ConfirmUserScreen())),
       )
     ];
 
