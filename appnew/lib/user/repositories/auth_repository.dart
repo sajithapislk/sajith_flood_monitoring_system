@@ -12,7 +12,10 @@ class AuthRepository {
   Future<UserLoginModel> login({required String email, required String password}) async {
     var data = {"email": email, "password": password};
     final res = await _apiService.postData(data: data ,url: 'user/login');
-    print(jsonDecode(res.body));
+    if (res.statusCode != 200) {
+      final Map<String, dynamic> body = jsonDecode(res.body);
+      throw Exception(body["message"].toString());
+    }
     return userLoginModelFromJson(res.body);
   }
 

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AreaController;
 use App\Http\Controllers\Api\ConfirmUserController;
 use App\Http\Controllers\Api\DMController;
+use App\Http\Controllers\Api\FCMController;
 use App\Http\Controllers\Api\FloodStatusController;
 use App\Http\Controllers\Api\MonitorPlaceController;
 use App\Http\Controllers\Api\RiskConfirmationController;
@@ -46,6 +47,8 @@ Route::prefix('user')->group(function () {
         Route::get('safety-place/{area}',[SafetyPlaceController::class,'place']);
         Route::post('risk-user',[RiskUserController::class,'store']);
         Route::post('risk-confirmation',[RiskConfirmationController::class,'store']);
+        Route::post('fcm-token',FCMController::class);
+
     });
 });
 

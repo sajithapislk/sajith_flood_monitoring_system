@@ -108,6 +108,13 @@
                                 <span class="nav-text">Safety Places</span>
                             </a>
                         </li>
+
+                        <li class="{{ request()->is('admin/analysis-report') ? 'active' : '' }}">
+                            <a class="sidenav-item-link" href="{{ url('admin/analysis-report') }}">
+                                <i class="mdi mdi-view-dashboard-outline"></i>
+                                <span class="nav-text">analysis report</span>
+                            </a>
+                        </li>
                     </ul>
 
                 </div>

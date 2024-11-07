@@ -39,6 +39,7 @@ class UserDashboardWrap extends StatefulWidget {
 }
 
 class _UserDashboardWrapState extends State<UserDashboardWrap> {
+  late String fcmToken;
   Future<void> fetchNearestRainGauge(BuildContext context) async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -69,6 +70,7 @@ class _UserDashboardWrapState extends State<UserDashboardWrap> {
     context.read<UserDashboardBloc>().add(FetchDataEvent(
           latitude: position.latitude,
           longitude: position.longitude,
+          fcm: fcmToken
         ));
   }
 
@@ -101,14 +103,15 @@ class _UserDashboardWrapState extends State<UserDashboardWrap> {
         );
       }
     });
-    String? token = await messaging.getToken();
-    print("FCM Token: $token");
+    fcmToken = await messaging.getToken() ?? "";
+
+    print("FCM Token: $fcmToken");
   }
   Future<void> _showNotification(String title, String body) async {
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
     AndroidNotificationDetails(
-      'your channel id',
-      'your channel name',
+      '123456',
+      'test',
       importance: Importance.max,
       priority: Priority.high,
       ticker: 'ticker',
@@ -128,8 +131,8 @@ class _UserDashboardWrapState extends State<UserDashboardWrap> {
 
   @override
   Widget build(BuildContext context) {
-    fetchNearestRainGauge(context);
     fetchNotification(context);
+    fetchNearestRainGauge(context);
 
     return Scaffold(
         appBar: AppBar(
