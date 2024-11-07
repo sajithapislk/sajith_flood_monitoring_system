@@ -2,23 +2,23 @@ import 'package:appnew/dm/blocs/riskPeople/risk_people_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../user/blocs/monitorPlace/monitor_place_state.dart';
-import '../blocs/riskPeople/risk_people_event.dart';
-import '../blocs/riskPeople/risk_people_state.dart';
+import '../blocs/confirmUser/confirm_user_bloc.dart';
+import '../blocs/confirmUser/confirm_user_event.dart';
+import '../blocs/confirmUser/confirm_user_state.dart';
 
-class RiskPeopleScreen extends StatefulWidget {
-  const RiskPeopleScreen({super.key});
+class ConfirmUserScreen extends StatefulWidget {
+  const ConfirmUserScreen({super.key});
 
   @override
-  State<RiskPeopleScreen> createState() => _RiskPeopleScreenState();
+  State<ConfirmUserScreen> createState() => _ConfirmUserScreenState();
 }
 
-class _RiskPeopleScreenState extends State<RiskPeopleScreen> {
+class _ConfirmUserScreenState extends State<ConfirmUserScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-      RiskPeopleBloc()
+      ConfirmUserBloc()
         ..add(FetchListEvent()),
       child: Scaffold(
           appBar: AppBar(
@@ -29,9 +29,9 @@ class _RiskPeopleScreenState extends State<RiskPeopleScreen> {
                   icon: Icon(Icons.exit_to_app))
             ],
           ),
-          body: BlocBuilder<RiskPeopleBloc, RiskPeopleState>(
+          body: BlocBuilder<ConfirmUserBloc, ConfirmUserState>(
             builder: (context, state) {
-              if(state is RiskPeopleLoaded){
+              if(state is ConfirmUserLoaded){
                 return ListView.builder(
                     itemCount: state.list.length,
                     itemBuilder: (context, index) {
@@ -54,14 +54,14 @@ class _RiskPeopleScreenState extends State<RiskPeopleScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  data.user.name,
+                                  data.riskUser.user.name,
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20,
                                       color: Colors.black),
                                 ),
                                 Text(
-                                  data.user.tp,
+                                  data.riskUser.user.tp,
                                   style: TextStyle(
                                       fontWeight: FontWeight.normal,
                                       fontSize: 14,
@@ -69,7 +69,7 @@ class _RiskPeopleScreenState extends State<RiskPeopleScreen> {
                                   ),
                                 ),
                                 Text(
-                                  "Lon:${data.longitude} Lat:${data.latitude}",
+                                  "Lon:${data.riskUser.longitude} Lat:${data.riskUser.latitude}",
                                   style: TextStyle(
                                       fontWeight: FontWeight.normal,
                                       fontSize: 14,
@@ -78,7 +78,7 @@ class _RiskPeopleScreenState extends State<RiskPeopleScreen> {
                                 ),
                               ],
                             ),
-                            Text("${data.distance} KM", style: TextStyle(
+                            Text("${data.riskUser.distance} KM", style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
                             ),)

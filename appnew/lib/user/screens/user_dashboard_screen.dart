@@ -2,14 +2,17 @@ import 'dart:developer';
 
 import 'package:appnew/user/screens/login_screen.dart';
 import 'package:appnew/user/screens/safe_place_screen.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 import '../../auth/auth_bloc.dart';
 import '../../auth/auth_event.dart';
 import '../../auth/auth_state.dart';
+import '../../main.dart';
 import '../blocs/dashboard/user_dashboard_bloc.dart';
 import '../blocs/dashboard/user_dashboard_event.dart';
 import '../blocs/dashboard/user_dashboard_state.dart';
@@ -36,6 +39,7 @@ class UserDashboardWrap extends StatefulWidget {
 }
 
 class _UserDashboardWrapState extends State<UserDashboardWrap> {
+  late String fcmToken;
   Future<void> fetchNearestRainGauge(BuildContext context) async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -64,14 +68,72 @@ class _UserDashboardWrapState extends State<UserDashboardWrap> {
     // Get the current position
     Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     context.read<UserDashboardBloc>().add(FetchDataEvent(
-      latitude: position.latitude,
-      longitude: position.longitude,
-    ));
+          latitude: position.latitude,
+          longitude: position.longitude,
+          fcm: fcmToken
+        ));
+  }
+
+  Future<void> fetchNotification(BuildContext context) async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      print('User granted permission');
+    } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
+      print('User granted provisional permission');
+    } else {
+      print('User declined or has not accepted permission');
+    }
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      if (message.notification != null) {
+        print('Message title: ${message.notification?.title}');
+        print('Message body: ${message.notification?.body}');
+      }
+      if (message.notification != null) {
+        _showNotification(
+          message.notification!.title ?? 'No title',
+          message.notification!.body ?? 'No body',
+        );
+      }
+    });
+    fcmToken = await messaging.getToken() ?? "";
+
+    print("FCM Token: $fcmToken");
+  }
+  Future<void> _showNotification(String title, String body) async {
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+    AndroidNotificationDetails(
+      '123456',
+      'test',
+      importance: Importance.max,
+      priority: Priority.high,
+      ticker: 'ticker',
+    );
+
+    const NotificationDetails platformChannelSpecifics =
+    NotificationDetails(android: androidPlatformChannelSpecifics);
+
+    await flutterLocalNotificationsPlugin.show(
+      0,
+      title,
+      body,
+      platformChannelSpecifics,
+      payload: 'item x',
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    fetchNotification(context);
     fetchNearestRainGauge(context);
+
     return Scaffold(
         appBar: AppBar(
           title: const Text('Flood Prediction System'),
@@ -84,10 +146,9 @@ class _UserDashboardWrapState extends State<UserDashboardWrap> {
                   icon: const Icon(Icons.exit_to_app),
                   onPressed: () {
                     context.read<AuthBloc>().add(
-                      LogoutRequested(),
-                    );
-                    Navigator.pushReplacement(
-                        context, MaterialPageRoute(builder: (context) => UserLoginScreen()));
+                          LogoutRequested(),
+                        );
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => UserLoginScreen()));
                   },
                 );
               },
@@ -100,52 +161,60 @@ class _UserDashboardWrapState extends State<UserDashboardWrap> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Card(
-                  elevation: 4,
-                  color: Colors.orange[100],
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: const [
-                                Icon(Icons.warning_amber_rounded, color: Colors.orange),
-                                SizedBox(width: 8),
-                                Text(
-                                  'Current Risk Level',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
+                BlocBuilder<UserDashboardBloc, UserDashboardState>(
+                  builder: (context, state) {
+                    if (state is UserDashboardLoaded) {
+                      if (state.data.nearestPlace.isDanger == 0) {
+                        return SizedBox();
+                      }
+                      return Card(
+                        elevation: 4,
+                        color: Colors.orange[100],
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: const [
+                                      Icon(Icons.warning_amber_rounded, color: Colors.orange),
+                                      SizedBox(width: 8),
+                                      Text(
+                                        'Current Risk Level',
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 8),
-                            const Text(
-                              'High',
-                              style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.orange,
+                                  const SizedBox(height: 8),
+                                  const Text(
+                                    'High',
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.orange,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ],
+                              ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context, MaterialPageRoute(builder: (context) => SafePlaceScreen(areaId: 1)));
+                                  },
+                                  child: Text("Safe Places"))
+                            ],
+                          ),
                         ),
-                        ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => SafePlaceScreen(areaId: 1)));
-                            }, child: Text("Safe Places")
-                        )
-                      ],
-                    ),
-                  ),
+                      );
+                    }
+                    return CircularProgressIndicator();
+                  },
                 ),
                 const SizedBox(height: 16),
 

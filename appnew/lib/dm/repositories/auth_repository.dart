@@ -13,7 +13,9 @@ class AuthRepository {
   Future<DmLoginModel> login({required String email, required String password}) async {
     var data = {"email": email, "password": password};
     final res = await _apiService.postData(data: data ,url: 'dm/login');
-    print(jsonDecode(res.body));
+    if (res.statusCode != 200) {
+      throw Exception(res);
+    }
     return dmLoginModelFromJson(res.body);
   }
 

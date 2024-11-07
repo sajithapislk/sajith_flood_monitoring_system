@@ -21,21 +21,17 @@ class ApiService {
     print(jsonEncode(data));
     final token = await _getToken();
 
-    try {
-      final response = await http.post(
-        Uri.parse(fullUrl),
-        headers: {
-          HttpHeaders.contentTypeHeader: 'application/json',
-          HttpHeaders.acceptHeader: 'application/json',
-          HttpHeaders.authorizationHeader: 'Bearer $token',
-        },
-        body: jsonEncode(data),
-      );
-      return response;
-    } catch (e) {
-      _handleError(e);
-      rethrow;
-    }
+    final response = await http.post(
+      Uri.parse(fullUrl),
+      headers: {
+        HttpHeaders.contentTypeHeader: 'application/json',
+        HttpHeaders.acceptHeader: 'application/json',
+        HttpHeaders.authorizationHeader: 'Bearer $token',
+      },
+      body: jsonEncode(data),
+    );
+
+    return response;
   }
 
   Future<http.Response> getData(String apiUrl, {Map<String, dynamic>? data}) async {
@@ -44,20 +40,15 @@ class ApiService {
     final uri = Uri.parse('$_baseUrl$apiUrl').replace(queryParameters: queryParams);
     final token = await _getToken();
     log(uri.toString());
-    try {
-      final response = await http.get(
-        uri,
-        headers: {
-          HttpHeaders.contentTypeHeader: 'application/json',
-          HttpHeaders.acceptHeader: 'application/json',
-          HttpHeaders.authorizationHeader: 'Bearer $token',
-        },
-      );
-      return response;
-    } catch (e) {
-      _handleError(e);
-      rethrow;
-    }
+    final response = await http.get(
+      uri,
+      headers: {
+        HttpHeaders.contentTypeHeader: 'application/json',
+        HttpHeaders.acceptHeader: 'application/json',
+        HttpHeaders.authorizationHeader: 'Bearer $token',
+      },
+    );
+    return response;
   }
 
   void _handleError(e) {

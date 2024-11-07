@@ -8,6 +8,7 @@ abstract class UserDashboardEvent extends Equatable {
 class FetchDataEvent extends UserDashboardEvent {
   final double latitude;
   final double longitude;
+  final String fcm;
 
-  FetchDataEvent({required this.latitude, required this.longitude});
+  FetchDataEvent({required this.latitude, required this.longitude, required this.fcm});
 }

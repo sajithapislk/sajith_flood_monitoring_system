@@ -8,60 +8,28 @@ use Illuminate\Http\Request;
 
 class RiskUserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        $users = RiskUser::with('user','monitor_places.area')->get();
-        return view('admin.risk_user',compact('users'));
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+        // Retrieve start and end dates from the request
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        // Query the users, applying filters if dates are provided
+        $query = RiskUser::with('user');
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        if ($startDate) {
+            $query->whereDate('created_at', '>=', $startDate);
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        if ($endDate) {
+            $query->whereDate('created_at', '<=', $endDate);
+        }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+        // Execute the query and get the filtered users
+        $users = $query->get();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        // Return the view with the filtered users
+        return view('admin.risk_user', compact('users'));
     }
 }
