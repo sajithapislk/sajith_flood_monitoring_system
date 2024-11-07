@@ -13,13 +13,39 @@ class MonitorPlaceSeeder extends Seeder
      */
     public function run(): void
     {
-        MonitorPlace::create([
+        MonitorPlace::insert([
+           [
             'area_id'=>'1',
             'is_danger'=>'0',
             'd_level'=>'60',
             'longitude'=>'13.5454545',
             'latitude'=>'12.4554545',
             'name'=>'Matale',
+           ],
+           [
+            'area_id'=>'2',
+            'is_danger'=>'0',
+            'd_level'=>'40',
+            'longitude'=>'12.54545453',
+            'latitude'=>'12.4554545',
+            'name'=>'Kandy',
+           ],
+           [
+            'area_id'=>'3',
+            'is_danger'=>'0',
+            'd_level'=>'90',
+            'longitude'=>'132.5454545',
+            'latitude'=>'122.45534545',
+            'name'=>'Kurunegala',
+           ],
+           [
+            'area_id'=>'4',
+            'is_danger'=>'0',
+            'd_level'=>'30',
+            'longitude'=>'11.5343545',
+            'latitude'=>'17.4532545',
+            'name'=>'Kekirawa',
+           ]
         ]);
     }
 }

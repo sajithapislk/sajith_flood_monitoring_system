@@ -17,6 +17,8 @@ class AreaSeeder extends Seeder
             ['name' => 'Matale'],
             ['name' => 'Kandy'],
             ['name' => 'Dabulla'],
+            ['name'=>'Jaffna'],
+            ['name'=>'Kurunegala']
         ]);
     }
 }
