@@ -16,8 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('safety_place_id');
             $table->unsignedBigInteger('risk_user_id');
             $table->timestamps();
-            $table->foreign('safety_place_id')->references('id')->on('safety_places'); 
-            $table->foreign('risk_user_id')->references('id')->on('risk_users'); 
+            $table->foreign('safety_place_id')->references('id')->on('safety_places');
+            $table->foreign('risk_user_id')->references('id')->on('risk_users');
         });
     }
 

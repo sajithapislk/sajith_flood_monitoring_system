@@ -21,8 +21,8 @@ class DMSeeder extends Seeder
                 'password' => ('12345678'),
                 'area_id' => '1',
                 'tp'=>'1234567890',
-                'created_at'=>'now',
-                'updated_at'=>'now'
+                'created_at'=> now(),
+                'updated_at'=> now()
             ],
             [
                 'name' => 'Sajith',
@@ -30,8 +30,8 @@ class DMSeeder extends Seeder
                 'password' => ('12345678'),
                 'area_id' => '2',
                 'tp'=>'713596504',
-                'created_at'=>'now',
-                'updated_at'=>'now'
+                'created_at'=> now(),
+                'updated_at'=> now()
             ],
             [
                 'name' => 'Saheer',
@@ -39,10 +39,10 @@ class DMSeeder extends Seeder
                 'password' => ('12345678'),
                 'area_id' => '3',
                 'tp'=>'734509675',
-                'created_at'=>'now',
-                'updated_at'=>'now'
+                'created_at'=> now(),
+                'updated_at'=> now()
             ]
-           
+
         ]);
     }
 }
