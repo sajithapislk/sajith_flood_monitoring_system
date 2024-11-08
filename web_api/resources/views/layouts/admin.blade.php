@@ -101,6 +101,12 @@
                                 <span class="nav-text">Confirmed Users</span>
                             </a>
                         </li>
+                        <li class="{{ request()->is('admin/dm') ? 'active' : '' }}">
+                            <a class="sidenav-item-link" href="{{ url('admin/dm') }}">
+                                <i class="mdi mdi-view-dashboard-outline"></i>
+                                <span class="nav-text">Area DMs</span>
+                            </a>
+                        </li>
 
                         <li class="{{ request()->is('admin/safe-place') ? 'active' : '' }}">
                             <a class="sidenav-item-link" href="{{ url('admin/safe-place') }}">

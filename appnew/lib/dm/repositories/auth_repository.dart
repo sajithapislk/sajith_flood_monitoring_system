@@ -14,7 +14,8 @@ class AuthRepository {
     var data = {"email": email, "password": password};
     final res = await _apiService.postData(data: data ,url: 'dm/login');
     if (res.statusCode != 200) {
-      throw Exception(res);
+      final Map<String, dynamic> body = jsonDecode(res.body);
+      throw Exception(body["message"].toString());
     }
     return dmLoginModelFromJson(res.body);
   }

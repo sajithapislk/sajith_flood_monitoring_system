@@ -5,7 +5,7 @@
         <div class="card card-default table-borderless">
             <div class="card-header justify-content-between">
                 <h2>Rain Gauge Station List </h2>
-                <button type="button" class="btn btn-primary btn-pill edit-btn" data-toggle="modal" data-target="#editModal">
+                <button type="button" class="btn btn-primary btn-pill edit-btn" data-toggle="modal" data-target="#insertModal">
                     Add
                 </button>
 
@@ -35,7 +35,8 @@
                                 <td style="width: 10%">{{ $row->created_at }}</td>
                                 <td style="width: 10%">{{ $row->updated_at }}</td>
                                 <td style="width: 5%">
-                                    <button type="button" class="btn btn-primary btn-pill edit-btn" data-toggle="modal"
+                                    <button type="button" class="btn btn-primary btn-pill edit-btn"
+                                        data-id="{{ $row->id }}" data-name="{{ $row->name }}" data-toggle="modal"
                                         data-target="#editModal">
                                         Edit
                                     </button>
@@ -62,8 +63,9 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ url('admin/monitor-place') }}" method="post">
+                <form action="{{ url('admin/monitor-place') }}" method="post" id="editForm">
                     @csrf
+                    @method('PUT')
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="inputName">Area</label>
@@ -72,7 +74,16 @@
                                 @foreach ($areas as $row)
                                     <option value="{{ $row->id }}">{{ $row->name }}</option>
                                 @endforeach
-                              </select>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputName">Danger Level</label>
+                            <input type="text" name="d_level" class="form-control" required>
+                            <span class="text-danger">
+                                @error('d_level')
+                                    {{ $message }}
+                                @enderror
+                            </span>
                         </div>
                         <div class="form-group">
                             <label for="inputName">latitude</label>
@@ -110,20 +121,55 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+    <div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="insertModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">Modal Title</h5>
+                    <h5 class="modal-title" id="insertModalLabel">Modal Title</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                </div>
-                <form action="{{ url('admin/monitor-place') }}" method="post" id="editForm">
+                </div>`
+                <form action="{{ url('admin/monitor-place') }}" method="post" id="insertForm">
                     @csrf
-                    @method('PUT')
                     <div class="modal-body">
+                        <div class="form-group">
+                            <label for="inputName">Area</label>
+                            <select class="form-control" name="area_id">
+                                <option selected disabled>Open this select menu</option>
+                                @foreach ($areas as $row)
+                                    <option value="{{ $row->id }}">{{ $row->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputName">Danger Level</label>
+                            <input type="text" name="d_level" class="form-control" required>
+                            <span class="text-danger">
+                                @error('d_level')
+                                    {{ $message }}
+                                @enderror
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputName">latitude</label>
+                            <input type="text" name="latitude" class="form-control" required>
+                            <span class="text-danger">
+                                @error('latitude')
+                                    {{ $message }}
+                                @enderror
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputName">longitude</label>
+                            <input type="text" name="longitude" class="form-control" required>
+                            <span class="text-danger">
+                                @error('longitude')
+                                    {{ $message }}
+                                @enderror
+                            </span>
+                        </div>
                         <div class="form-group">
                             <label for="inputName">Name</label>
                             <input type="text" name="name" class="form-control" required>
@@ -179,10 +225,13 @@
                 $('#deleteForm').attr('action', website + "/admin/monitor-place/" + id);
             });
             $("table").on("click", ".edit-btn", function() {
-                var id = $(this).parents('tr').find("td:eq(0)").text();
-                var name = $(this).parents('tr').find("td:eq(1)").text();
-                $('#editForm').attr('action', website + "/admin/monitor-place/" + id);
-                $('#editForm input[name="name"]').val(name);
+                var id = $(this).data('id'); // Get the ID from data attribute
+                var name = $(this).data('name'); // Get the name from data attribute
+
+                console.log("Editing ID:", id, "Name:", name);
+
+                $('#editForm').attr('action', website + "/admin/monitor-place/" + id); // Update form action
+                $('#editForm input[name="name"]').val(name); // Set the name in the input field
             });
         });
     </script>
