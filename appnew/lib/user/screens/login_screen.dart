@@ -1,6 +1,7 @@
 import 'package:appnew/auth/auth_bloc.dart';
 import 'package:appnew/auth/auth_event.dart';
 import 'package:appnew/auth/auth_state.dart';
+import 'package:appnew/user/screens/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -130,15 +131,13 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                 },
               ),
             ),
-            SizedBox(
-              height: 100,
-            ),
             TextButton(
-                onPressed: () => (),
+                onPressed: () =>  Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => RegisterScreen()),
+                ),
                 child: Text('New User? Create An Account')),
-            TextButton(
-                onPressed: () => (),
-                child: Text('DM Login?'))
           ],
         ),
       ),

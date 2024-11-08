@@ -17,9 +17,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<UserLoginRequested>(_onUserLoginRequested);
     on<DmLoginRequested>(_onDmLoginRequested);
     on<LogoutRequested>(_onLogout);
+    on<RegisterRequested>(_onRegisterRequested);
   }
 
-  Future<void>  _checkAuthStatus(AppStarted event, Emitter<AuthState> emit) async {
+  Future<void> _checkAuthStatus(AppStarted event, Emitter<AuthState> emit) async {
     final type = await _isUserLoggedIn(); // Replace with your logic
 
     if (type != '') {
@@ -33,32 +34,51 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(AuthLoading());
 
     try {
-
       UserLoginModel response = await userAuthRepository.login(email: event.email, password: event.password);
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       await localStorage.setString('token', response.accessToken);
       await localStorage.setString('type', 'user');
       emit(Authenticated(type: 'user'));
-
     } on Exception catch (e) {
       emit(AuthFailure(error: e.toString()));
     }
   }
+
   Future<void> _onDmLoginRequested(DmLoginRequested event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
 
     try {
-
       DmLoginModel response = await dmAuthRepository.login(email: event.email, password: event.password);
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       await localStorage.setString('token', response.token);
       await localStorage.setString('type', 'dm');
       emit(Authenticated(type: 'dm'));
-
     } on Exception catch (e) {
       emit(AuthFailure(error: e.toString()));
     }
   }
+
+  Future<void> _onRegisterRequested(
+      RegisterRequested event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
+    try {
+      final res = await userAuthRepository.register(
+          fullName: event.fullName,
+          email: event.email,
+          password: event.password,
+          phoneNumber: event.phoneNumber,
+          guardianName: event.guardianName,
+          guardianTp: event.guardianTp,
+          areaId: event.areaId);
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      await localStorage.setString('token', res.token);
+      await localStorage.setString('type', 'user');
+      emit(Authenticated(type: 'user'));
+    } on Exception catch (e) {
+      emit(AuthFailure(error: e.toString()));
+    }
+  }
+
   Future<void> _onLogout(LogoutRequested event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
 
@@ -66,11 +86,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       await localStorage.clear();
       emit(Unauthenticated());
-
     } on Exception catch (e) {
       emit(AuthFailure(error: e.toString()));
     }
   }
+
   Future<String> _isUserLoggedIn() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     final type = localStorage.getString('type');

@@ -43,7 +43,7 @@ class FloodStatusController extends Controller
         ]);
 
         $mp = MonitorPlace::find($id);
-        $randomForestResult = (new RandomForestPrediction('flood.csv',[$mp->id, null ,null, null, null, null,null, $request->date]))->predictResult();
+        $randomForestResult = (new RandomForestPrediction('flood.csv',[$id, null ,null, null, null, null,null, $request->date]))->predictResult();
 
         Log::info($randomForestResult);
         if($randomForestResult=="Danger Area"){

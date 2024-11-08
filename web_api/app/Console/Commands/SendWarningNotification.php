@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Http\Services\FirebaseService;
 use App\Models\MonitorPlace;
+use App\Models\RiskUser;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
@@ -29,7 +30,7 @@ class SendWarningNotification extends Command
      */
     public function handle(): void
     {
-        MonitorPlace::where('updated_at', '<', now()->subMinutes(5))->get()->each(function ($monitorPlace) {
+        RiskUser::where('created_at', '<', now()->subMinutes(5))->get()->each(function ($monitorPlace) {
             Log::alert($monitorPlace);
 
             $deviceToken = '
