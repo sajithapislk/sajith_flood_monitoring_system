@@ -90,7 +90,7 @@
                                 @enderror
                             </span>
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="inputName">Name</label>
                             <input type="text" name="name" class="form-control" required>
                             <span class="text-danger">
@@ -98,7 +98,7 @@
                                     {{ $message }}
                                 @enderror
                             </span>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger btn-pill" data-dismiss="modal">Close</button>
