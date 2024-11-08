@@ -221,7 +221,7 @@
     <script>
         $(document).ready(function() {
             $("table").on("click", ".delete-btn", function() {
-                var id = $(this).parents('tr').find("td:eq(0)").text();
+                var id = $(this).data('id');
                 $('#deleteForm').attr('action', website + "/admin/monitor-place/" + id);
             });
             $("table").on("click", ".edit-btn", function() {

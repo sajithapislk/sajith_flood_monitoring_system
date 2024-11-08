@@ -104,7 +104,7 @@
                         <li class="{{ request()->is('admin/dm') ? 'active' : '' }}">
                             <a class="sidenav-item-link" href="{{ url('admin/dm') }}">
                                 <i class="mdi mdi-view-dashboard-outline"></i>
-                                <span class="nav-text">Area DMs</span>
+                                <span class="nav-text">DMs</span>
                             </a>
                         </li>
 
