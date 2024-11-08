@@ -4,8 +4,8 @@
     <div class="container-fluid p-5">
         <div class="card card-default table-borderless">
             <div class="card-header justify-content-between">
-                <h2>monitor-place-List</h2>
-                <button type="button" class="btn btn-primary btn-pill edit-btn" data-toggle="modal" data-target="#editModal">
+                <h2>safe-place-List</h2>
+                <button type="button" class="btn btn-primary btn-pill edit-btn" data-toggle="modal" data-target="#insertModal">
                     Add
                 </button>
             </div>
@@ -34,6 +34,7 @@
                                 <td style="width: 10%">{{ $row->updated_at }}</td>
                                 <td style="width: 5%">
                                     <button type="button" class="btn btn-primary btn-pill edit-btn" data-toggle="modal"
+                                        data-id="{{ $row->id }}" data-name="{{ $row->name }}"
                                         data-target="#editModal">
                                         Edit
                                     </button>
@@ -51,16 +52,16 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addModalLabel">Modal Title</h5>
+                    <h5 class="modal-title" id="addModalLabel">Insert Safe Place</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ url('admin/monitor-place') }}" method="post">
+                <form action="{{ url('admin/safe-place') }}" method="post" id="insertForm">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
@@ -70,7 +71,7 @@
                                 @foreach ($areas as $row)
                                     <option value="{{ $row->id }}">{{ $row->name }}</option>
                                 @endforeach
-                              </select>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="inputName">latitude</label>
@@ -99,7 +100,16 @@
                                 @enderror
                             </span>
                         </div>
-                    </div>
+                        <div class="form-group">
+                            <label for="inputName">Tp</label>
+                            <input type="text" name="tp" class="form-control" required>
+                            <span class="text-danger">
+                                @error('tp')
+                                    {{ $message }}
+                                @enderror
+                            </span>
+                        </div>
+                    </div>W
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger btn-pill" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary btn-pill">Save Changes</button>
@@ -113,12 +123,12 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">Modal Title</h5>
+                    <h5 class="modal-title" id="editModalLabel">Edit Safe Place</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ url('admin/monitor-place') }}" method="post" id="editForm">
+                <form action="{{ url('admin/safe-place') }}" method="post" id="editForm">
                     @csrf
                     @method('PUT')
                     <div class="modal-body">
@@ -151,7 +161,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ url('admin/monitor-place') }}" method="post" id="deleteForm">
+                <form action="{{ url('admin/safe-place') }}" method="post" id="deleteForm">
                     @method('DELETE')
                     @csrf
                     <div class="modal-body">
@@ -173,14 +183,18 @@
     <script>
         $(document).ready(function() {
             $("table").on("click", ".delete-btn", function() {
-                var id = $(this).parents('tr').find("td:eq(0)").text();
-                $('#deleteForm').attr('action', website + "/admin/monitor-place/" + id);
+                var id = $(this).data('id');
+                $('#deleteForm').attr('action', website + "/admin/safe-place/" + id);
             });
             $("table").on("click", ".edit-btn", function() {
-                var id = $(this).parents('tr').find("td:eq(0)").text();
-                var name = $(this).parents('tr').find("td:eq(1)").text();
-                $('#editForm').attr('action', website + "/admin/monitor-place/" + id);
-                $('#editForm input[name="name"]').val(name);
+                var id = $(this).data('id'); // Get the ID from data attribute
+                var name = $(this).data('name'); // Get the name from data attribute
+
+                console.log("Editing ID:", id, "Name:", name);
+
+                $('#editForm').attr('action', website + "/admin/safe-place/" +
+                    id); // Update form action
+                $('#editForm input[name="name"]').val(name); // Set the name in the input field
             });
         });
     </script>

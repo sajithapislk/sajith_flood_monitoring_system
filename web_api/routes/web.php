@@ -4,6 +4,7 @@ use App\Http\Controllers\Web\AreaController;
 use App\Http\Controllers\Web\AdminController;
 use App\Http\Controllers\Web\AnalysisReportController;
 use App\Http\Controllers\Web\ConfirmUserSPController;
+use App\Http\Controllers\Web\DmController;
 use App\Http\Controllers\Web\FloodStatusController;
 use App\Http\Controllers\Web\MonitorPlaceController;
 use App\Http\Controllers\Web\RiskUserController;
@@ -44,6 +45,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('safe-place', SaftyPlaceController::class);
         Route::resource('risk-user', RiskUserController::class);
         Route::resource('confirm-user', ConfirmUserSPController::class);
+        Route::resource('dm', DmController::class);
 
         Route::get('/logout', [AdminController::class, 'logout'])->name('logout');
     });
