@@ -38,6 +38,7 @@ class MonitorPlaceController extends Controller
             'name'=>$request->name,
             'longitude'=>$request->longitude,
             'latitude'=>$request->latitude,
+            'd_level'=>$request->d_level
         ]);
         return redirect()->back()->with('success','done');
     }
