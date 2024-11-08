@@ -5,7 +5,7 @@ import 'package:appnew/user/screens/safe_place_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:fl_chart/fl_chart.dart';
 
@@ -97,37 +97,37 @@ class _UserDashboardWrapState extends State<UserDashboardWrap> {
         print('Message body: ${message.notification?.body}');
       }
       if (message.notification != null) {
-        _showNotification(
-          message.notification!.title ?? 'No title',
-          message.notification!.body ?? 'No body',
-        );
+        // _showNotification(
+        //   message.notification!.title ?? 'No title',
+        //   message.notification!.body ?? 'No body',
+        // );
       }
     });
     fcmToken = await messaging.getToken() ?? "";
 
     print("FCM Token: $fcmToken");
   }
-  Future<void> _showNotification(String title, String body) async {
-    const AndroidNotificationDetails androidPlatformChannelSpecifics =
-    AndroidNotificationDetails(
-      '123456',
-      'test',
-      importance: Importance.max,
-      priority: Priority.high,
-      ticker: 'ticker',
-    );
-
-    const NotificationDetails platformChannelSpecifics =
-    NotificationDetails(android: androidPlatformChannelSpecifics);
-
-    await flutterLocalNotificationsPlugin.show(
-      0,
-      title,
-      body,
-      platformChannelSpecifics,
-      payload: 'item x',
-    );
-  }
+  // Future<void> _showNotification(String title, String body) async {
+  //   const AndroidNotificationDetails androidPlatformChannelSpecifics =
+  //   AndroidNotificationDetails(
+  //     '123456',
+  //     'test',
+  //     importance: Importance.max,
+  //     priority: Priority.high,
+  //     ticker: 'ticker',
+  //   );
+  //
+  //   const NotificationDetails platformChannelSpecifics =
+  //   NotificationDetails(android: androidPlatformChannelSpecifics);
+  //
+  //   await flutterLocalNotificationsPlugin.show(
+  //     0,
+  //     title,
+  //     body,
+  //     platformChannelSpecifics,
+  //     payload: 'item x',
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
