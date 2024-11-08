@@ -5,7 +5,7 @@
         <div class="card card-default table-borderless">
             <div class="card-header justify-content-between">
                 <h2>Area List</h2>
-                <button type="button" class="btn btn-primary btn-pill edit-btn" data-toggle="modal" data-target="#editModal">
+                <button type="button" class="btn btn-primary btn-pill edit-btn" data-toggle="modal" data-target="#insertModel">
                     Add
                 </button>
             </div>
@@ -29,14 +29,13 @@
                                 <td style="width: 10%">{{ $row->created_at }}</td>
                                 <td style="width: 10%">{{ $row->updated_at }}</td>
                                 <td style="width: 5%">
-                                    <button type="button" class="btn btn-primary btn-pill edit-btn" data-toggle="modal"
-                                        data-target="#editModal">
+                                    <!-- Add data-id and data-name to the edit button -->
+                                    <button type="button" class="btn btn-primary btn-pill edit-btn" data-id="{{ $row->id }}" data-name="{{ $row->name }}" data-toggle="modal" data-target="#editModal">
                                         Edit
                                     </button>
                                 </td>
                                 <td style="width: 5%">
-                                    <button type="button" class="btn btn-primary btn-pill delete-btn" data-toggle="modal"
-                                        data-target="#deleteModal">
+                                    <button type="button" class="btn btn-primary btn-pill delete-btn" data-id="{{ $row->id }}" data-toggle="modal" data-target="#deleteModal">
                                         Delete
                                     </button>
                                 </td>
@@ -47,12 +46,44 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="insertModel" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Area Insert</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ url('admin/area') }}" method="post" id="insertForm">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="inputName">Name</label>
+                            <input type="text" name="name" class="form-control" required>
+                            <span class="text-danger">
+                                @error('name')
+                                    {{ $message }}
+                                @enderror
+                            </span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger btn-pill" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary btn-pill">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel"></h5>
+                    <h5 class="modal-title" id="editModalLabel">Area Edit</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -62,7 +93,7 @@
                     @method("PUT")
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="inputName">Area Name</label>
+                            <label for="inputName">Name</label>
                             <input type="text" name="name" class="form-control" required>
                             <span class="text-danger">
                                 @error('name')
@@ -109,18 +140,24 @@
 @endsection
 
 @section('js')
-    <script>
-        $(document).ready(function() {
-            $("table").on("click", ".delete-btn", function() {
-                var id = $(this).parents('tr').find("td:eq(0)").text();
-                $('#deleteForm').attr('action', website + "/admin/area/" + id);
-            });
-            $("table").on("click", ".edit-btn", function() {
-                var id = $(this).parents('tr').find("td:eq(0)").text();
-                var name = $(this).parents('tr').find("td:eq(1)").text();
-                $('#editForm').attr('action', website + "/admin/area/" + id);
-                $('#editForm input[name="name"]').val(name);
-            });
+<script>
+    $(document).ready(function() {
+        var website = "{{ url('/') }}";
+
+        $("table").on("click", ".delete-btn", function() {
+            var id = $(this).data('id');  // Get the ID from data attribute
+            $('#deleteForm').attr('action', website + "/admin/area/" + id);
         });
-    </script>
+
+        $("table").on("click", ".edit-btn", function() {
+            var id = $(this).data('id');  // Get the ID from data attribute
+            var name = $(this).data('name');  // Get the name from data attribute
+
+            console.log("Editing ID:", id, "Name:", name);
+
+            $('#editForm').attr('action', website + "/admin/area/" + id);  // Update form action
+            $('#editForm input[name="name"]').val(name);  // Set the name in the input field
+        });
+    });
+</script>
 @endsection
