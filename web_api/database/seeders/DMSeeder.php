@@ -24,14 +24,14 @@ class DMSeeder extends Seeder
             ],
             [
                 'name' => 'Sajith',
-                'email' => 'dm@test.com',
+                'email' => 'sajith@test.com',
                 'password' => Hash::make('12345678'),
                 'area_id' => '2',
                 'tp'=>'713596504',
             ],
             [
                 'name' => 'Saheer',
-                'email' => 'dm@test.com',
+                'email' => 'saheer@test.com',
                 'password' => Hash::make('12345678'),
                 'area_id' => '3',
                 'tp'=>'734509675',
