@@ -91,7 +91,7 @@
                                 @enderror
                             </span>
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="inputName">Name</label>
                             <input type="text" name="name" class="form-control" required>
                             <span class="text-danger">
