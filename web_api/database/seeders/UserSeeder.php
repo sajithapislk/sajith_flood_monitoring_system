@@ -21,6 +21,8 @@ class UserSeeder extends Seeder
             'tp'=>'0772193832',
             'guardian_tp'=>'0777493085',
             'area_id'=>'1',
+            'created_at'=>'now',
+                'updated_at'=>'now'
         ]);
     }
 }
