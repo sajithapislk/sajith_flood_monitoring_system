@@ -18,23 +18,29 @@ class DMSeeder extends Seeder
             [
                 'name' => 'Test DM',
                 'email' => 'dm@test.com',
-                'password' => Hash::make('12345678'),
+                'password' => ('12345678'),
                 'area_id' => '1',
                 'tp'=>'1234567890',
+                'created_at'=>'now',
+                'updated_at'=>'now'
             ],
             [
                 'name' => 'Sajith',
                 'email' => 'sajith@test.com',
-                'password' => Hash::make('12345678'),
+                'password' => ('12345678'),
                 'area_id' => '2',
                 'tp'=>'713596504',
+                'created_at'=>'now',
+                'updated_at'=>'now'
             ],
             [
                 'name' => 'Saheer',
                 'email' => 'saheer@test.com',
-                'password' => Hash::make('12345678'),
+                'password' => ('12345678'),
                 'area_id' => '3',
                 'tp'=>'734509675',
+                'created_at'=>'now',
+                'updated_at'=>'now'
             ]
            
         ]);
