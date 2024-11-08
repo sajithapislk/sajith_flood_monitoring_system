@@ -14,46 +14,46 @@ class MonitorPlaceSeeder extends Seeder
     public function run(): void
     {
         MonitorPlace::insert([
-           [
-            'area_id'=>'1',
-            'is_danger'=>'0',
-            'd_level'=>'60',
-            'longitude'=>'13.5454545',
-            'latitude'=>'12.4554545',
-            'name'=>'Matale',
-            'created_at'=>'now',
-                'updated_at'=>'now'
-           ],
-           [
-            'area_id'=>'2',
-            'is_danger'=>'0',
-            'd_level'=>'40',
-            'longitude'=>'12.54545453',
-            'latitude'=>'12.4554545',
-            'name'=>'Kandy',
-            'created_at'=>'now',
-                'updated_at'=>'now'
-           ],
-           [
-            'area_id'=>'3',
-            'is_danger'=>'0',
-            'd_level'=>'90',
-            'longitude'=>'132.5454545',
-            'latitude'=>'122.45534545',
-            'name'=>'Kurunegala',
-            'created_at'=>'now',
-                'updated_at'=>'now'
-           ],
-           [
-            'area_id'=>'4',
-            'is_danger'=>'0',
-            'd_level'=>'30',
-            'longitude'=>'11.5343545',
-            'latitude'=>'17.4532545',
-            'name'=>'Kekirawa',
-            'created_at'=>'now',
-                'updated_at'=>'now'
-           ]
+            [
+                'area_id' => '1',
+                'is_danger' => '0',
+                'd_level' => '60',
+                'longitude' => '7.4583784',
+                'latitude' => ',80.6081052',
+                'name' => 'Matale',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'area_id' => '2',
+                'is_danger' => '0',
+                'd_level' => '40',
+                'longitude' => '7.2946286',
+                'latitude' => ',80.5845813',
+                'name' => 'Kandy',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'area_id' => '3',
+                'is_danger' => '0',
+                'd_level' => '90',
+                'longitude' => '7.4807829',
+                'latitude' => '80.2753771',
+                'name' => 'Kurunegala',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'area_id' => '4',
+                'is_danger' => '0',
+                'd_level' => '30',
+                'longitude' => '8.0457586',
+                'latitude' => '80.573816',
+                'name' => 'Kekirawa',
+                'created_at' => now(),
+                'updated_at' => now()
+            ]
         ]);
     }
 }

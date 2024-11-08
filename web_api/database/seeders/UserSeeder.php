@@ -13,16 +13,51 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
-            'name' => 'User',
-            'email' => 'user@test.com',
-            'password' => '12345678',
-            'guardian_name'=>'Test Guardian',
-            'tp'=>'0772193832',
-            'guardian_tp'=>'0777493085',
-            'area_id'=>'1',
-            'created_at'=>'now',
-                'updated_at'=>'now'
+        User::insert([
+            [
+                'name' => 'User',
+                'email' => 'user@test.com',
+                'password' => '12345678',
+                'guardian_name' => 'Test Guardian',
+                'tp' => '0772193832',
+                'guardian_tp' => '0777493085',
+                'area_id' => '1',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'User',
+                'email' => 'user2@test.com',
+                'password' => '12345678',
+                'guardian_name' => 'Test Guardian',
+                'tp' => '0772193833',
+                'guardian_tp' => '0777493087',
+                'area_id' => '2',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'User',
+                'email' => 'user3@test.com',
+                'password' => '12345678',
+                'guardian_name' => 'Test Guardian',
+                'tp' => '0772193834',
+                'guardian_tp' => '0777493088',
+                'area_id' => '1',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'User',
+                'email' => 'user4@test.com',
+                'password' => '12345678',
+                'guardian_name' => 'Test Guardian',
+                'tp' => '0772193835',
+                'guardian_tp' => '0777493089',
+                'area_id' => '4',
+                'created_at' => now(),
+                'updated_at' => now()
+            ]
         ]);
     }
 }

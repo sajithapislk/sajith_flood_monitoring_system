@@ -15,42 +15,42 @@ class FloodStatusSeeder extends Seeder
     {
         FloodStatus::insert([
             [
-                 'monitor_place_id' => '1',
-                 'water_level' => '10',
-                 'created_at' => '2024-08-06 06:41:15',
-                   'updated_at'=>'now'
+                'monitor_place_id' => '1',
+                'water_level' => '10',
+                'created_at' => '2024-08-06 06:41:15',
+                'updated_at' => now()
             ],
             [
                 'monitor_place_id' => '1',
-                 'water_level' => '14',
-                 'created_at' => '2024-08-06 07:41:15',
-                   'updated_at'=>'now'
+                'water_level' => '14',
+                'created_at' => '2024-08-06 07:41:15',
+                'updated_at' => now()
 
             ],
             [
                 'monitor_place_id' => '1',
-                 'water_level' => '0',
-                 'created_at' => '2024-08-06 08:41:15',
-                   'updated_at'=>'now'
+                'water_level' => '0',
+                'created_at' => '2024-08-06 08:41:15',
+                'updated_at' => now()
             ],
             [
                 'monitor_place_id' => '1',
                 'water_level' => '10',
                 'created_at' => '2024-08-07 07:41:15',
-                  'updated_at'=>'now'
-           ],
-           [
-               'monitor_place_id' => '1',
+                'updated_at' => now()
+            ],
+            [
+                'monitor_place_id' => '1',
                 'water_level' => '5',
                 'created_at' => '2024-08-07 08:41:15',
-                  'updated_at'=>'now'
-           ],
-           [
-               'monitor_place_id' => '1',
+                'updated_at' => now()
+            ],
+            [
+                'monitor_place_id' => '1',
                 'water_level' => '20',
                 'created_at' => '2024-08-07 09:41:15',
-                  'updated_at'=>'now'
-           ],
+                'updated_at' => now()
+            ],
         ]);
     }
 }

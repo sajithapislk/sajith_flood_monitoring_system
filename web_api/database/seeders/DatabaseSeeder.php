@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\RiskConfirmation;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,7 +21,11 @@ class DatabaseSeeder extends Seeder
             DMSeeder::class,
             MonitorPlaceSeeder::class,
             SafetyPlaceSeeder::class,
-            FloodStatusSeeder::class
+            FloodStatusSeeder::class,
+            RiskUserSeeder::class,
+            NotificationSeeder::class,
+            RiskConfirmationSeeder::class,
+
         ]);
     }
 }

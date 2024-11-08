@@ -14,11 +14,31 @@ class AreaSeeder extends Seeder
     public function run(): void
     {
         Area::insert([
-            ['name' => 'Matale'],
-            ['name' => 'Kandy'],
-            ['name' => 'Dabulla'],
-            ['name'=>'Jaffna'],
-            ['name'=>'Kurunegala']
+            [
+                'name' => 'Matale',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Kandy',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Dabulla',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Jaffna',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Kurunegala',
+                'created_at' => now(),
+                'updated_at' => now()
+            ]
         ]);
     }
 }
