@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
         User::create([
             'name' => 'User',
             'email' => 'user@test.com',
-            'password' => Hash::make('12345678'),
+            'password' => '12345678',
             'guardian_name'=>'Test Guardian',
             'tp'=>'0772193832',
             'guardian_tp'=>'0777493085',

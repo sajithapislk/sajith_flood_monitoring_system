@@ -55,7 +55,7 @@ class User extends Authenticatable
     }
     public function monitorPlaces()
     {
-        return $this->hasMany(MonitorPlace::class,'area_id','area_id');
+        return $this->hasMany(MonitorPlace::class, 'area_id', 'area_id');
     }
     public function unreadNotifications()
     {
@@ -64,5 +64,9 @@ class User extends Authenticatable
     public function scopeUnreadNotifications(Builder $query)
     {
         return $query->whereNull('read_at');
+    }
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
     }
 }
