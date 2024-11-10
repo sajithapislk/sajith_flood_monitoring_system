@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'User',
                 'email' => 'user@test.com',
-                'password' => '12345678',
+                'password' => Hash::make('12345678'),
                 'guardian_name' => 'Test Guardian',
                 'tp' => '0772193832',
                 'guardian_tp' => '0777493085',
@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'User',
                 'email' => 'user2@test.com',
-                'password' => '12345678',
+                'password' => Hash::make('12345678'),
                 'guardian_name' => 'Test Guardian',
                 'tp' => '0772193833',
                 'guardian_tp' => '0777493087',
@@ -39,7 +39,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'User',
                 'email' => 'user3@test.com',
-                'password' => '12345678',
+                'password' => Hash::make('12345678'),
                 'guardian_name' => 'Test Guardian',
                 'tp' => '0772193834',
                 'guardian_tp' => '0777493088',
@@ -50,7 +50,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'User',
                 'email' => 'user4@test.com',
-                'password' => '12345678',
+                'password' => Hash::make('12345678'),
                 'guardian_name' => 'Test Guardian',
                 'tp' => '0772193835',
                 'guardian_tp' => '0777493089',
